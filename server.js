@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   let body = req.body;
+
+  body.timestamp = new Date();
+
   console.log(body);
   plates.insert(body);
   res.send('POST request to homepage');
