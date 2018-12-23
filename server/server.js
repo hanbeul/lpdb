@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 
-const db = require('monk')('localhost/lpdb');
+const db = require('./db.js');
 const plates = db.get('plates');
 
 app.use(bodyParser.json());
