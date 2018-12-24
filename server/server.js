@@ -4,22 +4,24 @@ const bodyParser = require('body-parser');
 const port = 3000;
 
 const db = require('./db.js');
-const plates = db.get('plates');
+db.init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.get('/lpdb', async (req, res) => {
+  let results = [];
+  results = await db.find({});
+  res.send(results);
 });
 
-app.post('/', (req, res) => {
+app.post('/lpdb', (req, res) => {
   let body = req.body;
 
   body.timestamp = new Date();
 
   console.log(body);
-  plates.insert(body);
+  db.insert(body);
   res.send('POST request to homepage');
 });
 

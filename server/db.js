@@ -15,11 +15,23 @@ module.exports.init = function() {
   });
 }
 
-module.exports.find = (query, callback) => {
-  let plates = _db.collection('plates');
-  plates.find({}).toArray(function(err, docs) {
-    callback(docs);
-  })
+module.exports.insert = function(data) {
+  plates.insert(data, (error, result => {
+    if (error) {
+      console.log('Error inserting into database: ' + error);
+      return error;
+    }
+    if (result.ok) {
+      console.log('Successfully inserted %d records.', result.n);
+    }
+  }));
+}
+
+module.exports.find = async (query, callback) => {
+  let output = [];
+  
+  output = _db.collection('plates').find({}).toArray();
+  return output;
 }
 
 module.exports.close = function() {
