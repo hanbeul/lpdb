@@ -1,37 +1,28 @@
 <template>
   <div class="plate-stream">
     <h1>Plate Stream Component Loaded!</h1>
+    <ul v-for="plate in plates" :key="plate._id">
+      <li>{{ plate.timeStamp }} : {{ plate.best_plate_number }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-
-// Connection URL
-const url = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'lpdb';
-
-// Create a new MongoClient
-const client = new MongoClient(url);
-
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-
-  client.close();
-});
-
-
 export default {
   name: 'PlateStream',
   props: {
-  }
+  }, 
+  data: function() {
+    return {
+      plates: [],
+    }
+  },
+  created: function() {
+    console.log('Running init function!');
+    fetch('http://localhost:3000/lpdb').then(response => response.json()).then(json => {
+      this.plates = json;
+    });
+  },
 }
 </script>
 

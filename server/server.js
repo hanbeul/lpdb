@@ -2,15 +2,18 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
+const cors = require('cors');
 
 const db = require('./db.js');
 db.init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get('/lpdb', async (req, res) => {
   let results = [];
+  console.log('received request');
   results = await db.find({});
   res.send(results);
 });
