@@ -15,14 +15,14 @@ app.get('/lpdb', async (req, res) => {
   res.send(results);
 });
 
-app.post('/lpdb', (req, res) => {
+app.post('/lpdb', async (req, res) => {
   let body = req.body;
 
   body.timestamp = new Date();
 
-  console.log(body);
+  //console.log(body);
   db.insert(body);
   res.send('POST request to homepage');
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));

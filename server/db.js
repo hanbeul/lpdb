@@ -4,7 +4,7 @@ let _db;
 let url = 'mongodb://localhost:27017';
 let dbName = 'lpdb';
 
-module.exports.init = function() {
+module.exports.init = async () => {
   MongoClient.connect(url, function(err, client) {
     if (err) {
       console.log('An error has occured: ' + err);
@@ -15,19 +15,17 @@ module.exports.init = function() {
   });
 }
 
-module.exports.insert = function(data) {
-  plates.insert(data, (error, result => {
+module.exports.insert = async (data) => {
+  _db.collection('plates').insertOne(data, (error, result) => {
     if (error) {
-      console.log('Error inserting into database: ' + error);
+      console.log('An error has occured: ' + error);
       return error;
     }
-    if (result.ok) {
-      console.log('Successfully inserted %d records.', result.n);
-    }
-  }));
+    console.log('Sucessfully inserted record!')
+  });
 }
 
-module.exports.find = async (query, callback) => {
+module.exports.find = async (query) => {
   let output = [];
   
   output = _db.collection('plates').find({}).toArray();
