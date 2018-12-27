@@ -28,7 +28,7 @@ module.exports.insert = async (data) => {
 module.exports.find = async (query) => {
   let output = [];
   
-  output = _db.collection('plates').find({}).toArray();
+  output = _db.collection('plates').find({}).sort({timestamp: -1}).limit(10).toArray();
   return output;
 }
 

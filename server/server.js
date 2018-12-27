@@ -13,8 +13,9 @@ app.use(cors());
 
 app.get('/lpdb', async (req, res) => {
   let results = [];
-  console.log('received request');
+
   results = await db.find({});
+  console.log(results);
   res.send(results);
 });
 
