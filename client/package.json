@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "buefy": "^0.7.1",
     "dns": "^0.2.2",
     "module": "^1.2.5",
     "register-service-worker": "^1.5.2",

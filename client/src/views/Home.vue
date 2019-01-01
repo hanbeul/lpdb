@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <plate-stream />
+  <div class="home columns">
+    <plate-stream class="column is-6" />
   </div>
 </template>
 

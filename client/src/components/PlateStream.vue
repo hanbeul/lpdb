@@ -2,7 +2,7 @@
   <div class="plate-stream">
     <h1>Plate Stream Component Loaded!</h1>
     <ul v-for="plate in plates" :key="plate._id">
-      <li>{{ plate.timestamp | moment('MMMM Do YYYY, h:mm:ss a') }} : {{ plate.best_plate_number }}</li>
+      <li>{{ plate.timestamp | moment('MMMM Do YYYY, h:mm a') }} : {{ plate.best_plate_number }}</li>
     </ul>
   </div>
 </template>
