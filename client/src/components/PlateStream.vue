@@ -1,9 +1,33 @@
 <template>
   <div class="plate-stream">
     <h1>Plate Stream Component Loaded!</h1>
-    <ul v-for="plate in plates" :key="plate._id">
-      <li>{{ plate.timestamp | moment('MMMM Do YYYY, h:mm a') }} : {{ plate.best_plate_number }}</li>
-    </ul>
+    <div v-for="plate in plates" :key="plate._id">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+          {{ plate.best_plate_number }}
+          </p>
+          <a href="#" class="card-header-icon" aria-label="more options">
+            <span class="icon">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </a>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <br>
+            {{ plate.timestamp | moment('MMMM Do YYYY, h:mm a') }}
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a href="#" class="card-footer-item">Save</a>
+          <a href="#" class="card-footer-item">Edit</a>
+          <a href="#" class="card-footer-item">Delete</a>
+        </footer>
+      </div>
+    </div>
+
+    
   </div>
 </template>
 
