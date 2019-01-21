@@ -7,15 +7,19 @@ ENV LANG C.UTF-8
 # Install prerequisites
 run apt-get update && apt-get install -y \
 # lpdb dependencies
-python \
-python-pip
+python3 \
+python3-pip
 
 # Copy all data
-copy . /srv/lpdb
+copy assets /srv/lpdb/assets
+copy Pipfile* /srv/lpdb/
 
 workdir /srv/lpdb
-run pip install pipenv && \
-pipenv install --system --deploy
+run ln -s /usr/lib/python2.7/dist-packages/openalpr /usr/local/lib/python3.6/dist-packages/ && \
+pip3 install pipenv && \
+pipenv install --system --deploy 
+
+copy main.py /srv/lpdb/
 
 #workdir /data
-entrypoint ["python", "main.py"]
+entrypoint ["python3", "main.py"]
