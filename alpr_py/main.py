@@ -2,27 +2,27 @@ import numpy as np
 import cv2
 from openalpr import Alpr
 from threading import Timer, Thread
-from queue import Queue
 import json
 
 scalefx = 1
 scalefy = 1
 
 sessions = {}
-#source = 'rtsp://admin:gkckdtlr2812@192.168.1.90/streaming/channels/1'
-#source = 'rtsp://admin:gkckdtlr2812@192.168.2.54/streaming/channels/1'
-source = 'assets/vid_left_right_720p.mp4'
+source = './assets/vid_left_right_720p.mp4'
 
-alpr = Alpr('us', '/Users/hanbeul/Downloads/openalpr/config/openalpr.conf.defaults', '/Users/hanbeul/Downloads/openalpr/runtime_data/')
+alpr = Alpr('us', './openalpr/config/openalpr.conf.defaults', './openalpr/runtime_data/')
 
+iterations = 0
 
 cap = cv2.VideoCapture(source)
 while(True):
+  iterations += 1
   ret, frame = cap.read()
   width = cap.get(3)
   height = cap.get(4)
 
   print('Height: ', height, 'Width: ', width)
+  print('Iteration: ', iterations)
 
   json = alpr.recognize_ndarray(frame)
   
