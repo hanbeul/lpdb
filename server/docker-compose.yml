@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  lpdb-server:
+    build: .
+    image: hanbeul/lpdb-server
+  openalpr:
+    build: ./openalpr/
+    image: hanbeul/openalpr
+    volumes:
+      - ./config:/config
+    entrypoint:
+      - alprd
+      - --config
+      - /config
+      - -f
+
+
+    # command: ["python", "app.py"]
+    # environment:
+    #   - CELERY_BROKER_URL=amqp://user:password@rabbitmq:5672
+    # volumes:
+    #   - ./app:/app
+    #depends_on:
+    #  - mongo
+
+    #mongo:
+    #  image: mongo
+    #  expose:
+    #    - "27017"

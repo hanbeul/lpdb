@@ -4,17 +4,19 @@ const bodyParser = require('body-parser');
 const port = 3000;
 const cors = require('cors');
 
-const db = require('./db.js');
-db.init();
+//const db = require('./db.js');
+//db.init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+let plates = [];
+
 app.get('/lpdb', async (req, res) => {
   let results = [];
 
-  results = await db.find({});
+  //results = await db.find({});
   console.log(results);
   res.send(results);
 });
@@ -24,8 +26,10 @@ app.post('/lpdb', async (req, res) => {
 
   body.timestamp = new Date();
 
+  console.log(body);
+
   //console.log(body);
-  db.insert(body);
+  //db.insert(body);
   res.send('POST request to homepage');
 });
 

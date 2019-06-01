@@ -1,0 +1,8 @@
+FROM node:11
+WORKDIR /app
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+COPY *.js ./
+
+ENTRYPOINT ["node", "server.js"]
