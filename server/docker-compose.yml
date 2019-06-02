@@ -5,8 +5,7 @@ services:
     build: .
     image: hanbeul/lpdb-server
   openalpr:
-    build: ./openalpr/
-    image: hanbeul/openalpr
+    image: openalpr/openalpr
     volumes:
       - ./config:/config
     entrypoint:
