@@ -4,15 +4,18 @@ services:
   lpdb-server:
     build: .
     image: hanbeul/lpdb-server
+    ports:
+      80:3000
   openalpr:
     image: openalpr/openalpr
     volumes:
       - ./config:/config
     entrypoint:
-      - alprd
-      - --config
-      - /config
-      - -f
+      - /bin/bash
+      #- alprd
+      #- --config
+      #- /config
+      #- -f
 
 
     # command: ["python", "app.py"]
