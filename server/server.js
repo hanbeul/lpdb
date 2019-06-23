@@ -11,22 +11,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-let plates = [];
+let plates = {};
 
 app.get('/lpdb', async (req, res) => {
-  let results = [];
-
-  //results = await db.find({});
-  console.log(results);
-  res.send(results);
+  res.send(plates);
 });
 
 app.post('/lpdb', async (req, res) => {
+  console.log('Received post request! ');
   let body = req.body;
 
-  body.timestamp = new Date();
+  //body.timestamp = new Date();
 
   console.log(body);
+
+  if (body.plate in plates) {
+    plates[body.plate]++;
+  } else {
+    plates[body.plate] = 1;
+  }
 
   //console.log(body);
   //db.insert(body);
