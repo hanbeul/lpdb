@@ -24,5 +24,22 @@
 }
 
 .view {
-  background-color: #e1e8ee;
+  background-color: #e7f0f8;
+  padding: 3rem;
+}
+
+.cardHeader {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.cardMeta {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  text-align: center;
+  color: #5EBA00;
 }
