@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Card } from 'semantic-ui-react'
-
+import { Card, Segment } from 'semantic-ui-react'
+import Chart from '../../components/Chart'
 
 
 class Home extends Component {
+
     render() {
         return (
             <div className="view">
@@ -49,6 +50,15 @@ class Home extends Component {
                             <Card.Meta><p className="cardMeta">Customer retention rate</p></Card.Meta>
                             {/* <Card.Description><p className="cardDescription">This week</p></Card.Description> */}
                         </Card.Content>   
+                    </Card>
+                </Card.Group>
+
+                <Card.Group itemsPerRow={2}>
+                    <Card>
+                        <Chart />   
+                    </Card>
+                    <Card>
+                        <Chart />   
                     </Card>
                 </Card.Group>
               </div>
