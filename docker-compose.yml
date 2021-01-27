@@ -1,14 +1,14 @@
 version: '3'
 services:
-
   alpr:
-    build: ./alpr_py
-    image: hanbeul/lpdb-alpr
-    volumes:
-      - ./alpr_py:/srv/lpdb
+    build: ./alpr
 
-  server:
-    build: ./server
+  backend:
+    build: ./backend
     ports:
+      - 9000:9000
+
+  frontend:
+    build: ./frontend
+    ports: 
       - 3000:3000
-    image: hanbeul/lpdb-server
