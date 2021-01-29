@@ -22,8 +22,7 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/lpdb', async (req, res) => {
-  //res.send(plates);
-  res.send("Something else! Via docker volumes");
+  res.send(plates);
 });
 
 app.post('/lpdb', async (req, res) => {

@@ -4,6 +4,6 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm -g install nodemon
 RUN npm install
-COPY *.js ./
+COPY . .
 
-ENTRYPOINT ["nodemon", "server.js"]
+ENTRYPOINT ["nodemon", "src/main.js"]
