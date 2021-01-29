@@ -1,13 +1,33 @@
 import React, { Component } from 'react'
 import { Card, Segment } from 'semantic-ui-react'
 import Chart from '../../components/Chart'
+import axios from 'axios';
 
 
 class Home extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {test : ''};
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:9000/')
+          .then(response => {
+            this.setState({ test: response.data })
+            console.log(this.state.test);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      }
+
+
     render() {
         return (
             <div className="view">
+                <h1>Hello, this is: { this.state.test } </h1>
                 <Card.Group itemsPerRow={6}>
                     <Card>
                         <Card.Content>
