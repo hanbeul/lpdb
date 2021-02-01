@@ -13,13 +13,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-let plates = {};
+
+
+
+// Begin mike's testing area
+
+const fs = require('fs')
+const path = require('path'),    
+filePath = path.join(__dirname, './sampleData/customers.json');
+
+
+app.get('/test', async (req, res) => {
+  fs.readFile(filePath, function read(err, data) {
+    if (err) throw err;
+    const content = JSON.parse(data);
+    res.send(content[0]);
+  });
+  
+});
+// End mike's testing area
+
+
 
 app.get('/', async (req, res) => {
   let x = await fetch('http://alpr:5000');
   x = await x.text();
   res.send(x);
 });
+
+let plates = {};
 
 app.get('/lpdb', async (req, res) => {
   res.send(plates);

@@ -13,10 +13,9 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:9000/')
+        axios.get('http://localhost:9000/test')
           .then(response => {
-            this.setState({ test: response.data })
-            console.log(this.state.test);
+            this.setState({ test: response.data.licensePlate })
           })
           .catch((error) => {
             console.log(error);
@@ -27,7 +26,7 @@ class Home extends Component {
     render() {
         return (
             <div className="view">
-                <h1>Hello, this is: { this.state.test } </h1>
+                <h1>Your license plate is: { this.state.test } </h1>
                 <Card.Group itemsPerRow={6}>
                     <Card>
                         <Card.Content>
