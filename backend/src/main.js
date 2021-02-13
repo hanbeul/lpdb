@@ -27,13 +27,54 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-let plates = {};
+
+
+
+// Begin mike's testing area
+
+const fs = require('fs')
+const path = require('path'),    
+custFilePath = path.join(__dirname, './sampleData/customers.json');
+visitsFilePath = path.join(__dirname, './sampleData/visits.json');
+
+
+app.get('/customers', async (req, res) => {
+  fs.readFile(custFilePath, function read(err, data) {
+    if (err) throw err;
+    const content = JSON.parse(data);
+    res.send(content);
+  });
+});
+
+app.get('/visits', async (req, res) => {
+  fs.readFile(visitsFilePath, function read(err, data) {
+    if (err) throw err;
+    const content = JSON.parse(data);
+    res.send(content);
+  });
+});
+
+//below is an example of how we'd serve data that is filtered/analyzed from the backend. I'm not going to to this yet though...
+app.get('/totalvisits', async (req, res) => {
+  fs.readFile(visitsFilePath, function read(err, data) {
+    if (err) throw err;
+    const content = JSON.parse(data);
+    const contentLength = Object.keys(content).length;
+    res.send(contentLength.toString());
+  });
+  
+});
+// End mike's testing area
+
+
 
 app.get('/', async (req, res) => {
   let x = await fetch('http://alpr:5000');
   x = await x.text();
   res.send(x);
 });
+
+let plates = {};
 
 app.get('/lpdb', async (req, res) => {
   res.send(plates);
