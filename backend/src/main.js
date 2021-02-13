@@ -4,10 +4,24 @@ const bodyParser = require('body-parser');
 const port = 9000;
 const cors = require('cors');
 
+const ws = require('ws');
+
 const fetch = require('node-fetch');
 
 //const db = require('./db.js');
 //db.init();
+
+const wsServer = new ws.Server({ noServer: true });
+wsServer.on('connection', socket => {
+  socket.on('message', message => {
+    console.log(message);
+    wsServer.clients.forEach(client => {
+      if (client.readyState === ws.OPEN) {
+        client.send(message);
+      }
+    })
+  });
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,4 +58,10 @@ app.post('/lpdb', async (req, res) => {
   res.send('POST request to homepage');
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Backend listening on port ${port}!`));
+
+server.on('upgrade', (request, socket, head) => {
+  wsServer.handleUpgrade(request, socket, head, socket => {
+    wsServer.emit('connection', socket, request);
+  });
+});
