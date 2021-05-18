@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 class Chart extends Component {
     constructor(props){
         super(props); 
         this.state = {
             chartData:{
-                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                labels: props.label,
                 datasets:[
                     {
                         label: 'Visits',
@@ -46,7 +46,7 @@ class Chart extends Component {
                 options={{
                     title:{
                         display:this.props.displayTitle,
-                        text:'Visits This Week',
+                        text:'Visits This Month',
                         fontSize:15
                     },
                     scales: {

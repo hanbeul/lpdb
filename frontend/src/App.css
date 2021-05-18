@@ -3,7 +3,7 @@
 }
 
 .title {
-  padding: 1.5rem;
+  padding: 0.7rem;
 }
 
 .nav {
@@ -11,16 +11,25 @@
 
 .footer{
   text-align: center;
-  padding: 1.5rem;
-  /* position: fixed; */
+  position: absolute;
   bottom: 0;
   right: 0;
   width:100%;
+  height: 5%;
   border-top: 1.5px solid lightgrey;
+  background-color: white;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .footer > .footerText {
   color:#9AA0AC;
+  font-size:11px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .view {
@@ -43,3 +52,54 @@
   text-align: center;
   color: #5EBA00;
 }
+
+
+/*following are CSS for RecentScans view*/
+
+.recent {
+  position:absolute;
+  height: 70%;
+  width: 100%;
+  background-color: burlywood;
+}
+
+.past {
+  position:absolute;
+  top:70%;
+  height: 30%;
+  width: 100%;
+  background-color: rgb(119, 100, 75);
+}
+
+.mostRecentScanParent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  flex-direction:column;
+}
+
+.mostRecentScanParent > img {
+  max-width: 24rem;
+}
+
+.mostRecentScanParent > .LPNumberDiv {
+  display : block;
+}
+
+.mostRecentScanParent > p {
+  font-size:1rem;
+  margin: 0;
+
+}
+.mostRecentScanParent > .LPnumber {
+  font-size:2rem;
+  margin: 0;
+}
+.mostRecentScanParent > button {
+  font-size:2rem;
+  margin: 0;
+}
+
+
+
