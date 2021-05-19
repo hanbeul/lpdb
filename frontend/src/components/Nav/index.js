@@ -53,14 +53,14 @@ export default class Nav extends Component {
             Input
           </Menu.Item>
         </Link> */}
-        <Link to= '/settings'>
+        <Link to= '/visits'>
           <Menu.Item
-            name='upcomingEvents'
-            active={activeItem === 'upcomingEvents'}
+            name='visits'
+            active={activeItem === 'visits'}
             onClick={this.handleItemClick}
           >
-            <Icon name='settings' />
-            Settings
+            <Icon name='car' />
+            Visits
           </Menu.Item>
         </Link>
       </Menu>

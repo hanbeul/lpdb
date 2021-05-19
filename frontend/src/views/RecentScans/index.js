@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import MostRecentScan from '../../components/RecentScans/MostRecentScan'
+import PastScans from '../../components/RecentScans/PastScans'
 
 function RecentScans() {
     return (
-        <div>
+        <div className="recentScansPage">
             <div className="recent">
                 <MostRecentScan />
             </div>
+            <p className="pastTitle">Past 2nd to 11th visits &nbsp; &gt;</p>
             <div className="past">
-                <p>This is where the past scans will go.</p>
+                <PastScans />
             </div>
         </div>
         

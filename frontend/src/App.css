@@ -1,12 +1,28 @@
-.App {
-  text-align: center;
+html, body {
+  height:100%;
+  margin: 0;
+}
+
+
+#root, #root > div {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
+.mainDiv {
+  display:flex;
+  flex-direction:column;
+  height:100%;
 }
 
 .title {
   padding: 0.7rem;
+  flex: 0 1 auto;
 }
 
 .nav {
+  flex: 0 1 auto;
 }
 
 .footer{
@@ -56,50 +72,97 @@
 
 /*following are CSS for RecentScans view*/
 
+.recentScansPage {
+  display:flex;
+  flex-direction:column;
+  flex: 1 1 auto;
+}
+
 .recent {
-  position:absolute;
-  height: 70%;
-  width: 100%;
-  background-color: burlywood;
-}
-
-.past {
-  position:absolute;
-  top:70%;
-  height: 30%;
-  width: 100%;
-  background-color: rgb(119, 100, 75);
-}
-
-.mostRecentScanParent {
+  flex: 1.5;
+  background-color: #e7f0f8;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70%;
   flex-direction:column;
 }
 
-.mostRecentScanParent > img {
-  max-width: 24rem;
+.mostRecentScan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
 }
 
-.mostRecentScanParent > .LPNumberDiv {
+.mostRecentScan > img {
+  max-width: 18rem;
+}
+
+.mostRecentScan > .LPNumberDiv {
   display : block;
 }
 
-.mostRecentScanParent > p {
+.mostRecentScan > p {
   font-size:1rem;
   margin: 0;
 
 }
-.mostRecentScanParent > .LPnumber {
-  font-size:2rem;
+.mostRecentScan > .LPnumber {
+  font-size:1.5rem;
   margin: 0;
 }
-.mostRecentScanParent > button {
-  font-size:2rem;
+.mostRecentScan > button {
+  font-size:1.5rem;
   margin: 0;
 }
 
+.mostRecentScanTextArea {
+  display: flex;
+  padding-top: 0.5rem;
+}
 
+.mostRecentScanTextArea > p {
+  font-size: 1.3em;
+  margin: 0em;
+}
 
+.past {
+  flex: 1;
+  background-color: rgb(174, 175, 199);
+  overflow-x: auto;
+  /* white-space: nowrap; */
+  
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.past > .pastScans {
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.past > .pastScans > .pastScan{
+  width:16rem;
+  height:10rem;
+  margin: 0rem 1rem 0rem 1rem;
+
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.pastScanImg {
+  max-width:6rem;
+  margin: 0.5rem;
+}
+
+.pastTitle {
+  font-size:1.1em;
+  margin:0;
+  text-align:center;
+  background-color: rgb(174, 175, 199);
+}
