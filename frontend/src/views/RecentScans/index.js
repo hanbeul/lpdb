@@ -8,7 +8,7 @@ function RecentScans() {
             <div className="recent">
                 <MostRecentScan />
             </div>
-            <p className="pastTitle">Past 2nd to 11th visits &nbsp; &gt;</p>
+            {/* <p className="pastTitle">Past 2nd to 11th visits &nbsp; &gt;</p> */}
             <div className="past">
                 <PastScans />
             </div>
