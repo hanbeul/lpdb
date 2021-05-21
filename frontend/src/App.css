@@ -105,8 +105,8 @@ html, body {
 .mostRecentScan > p {
   font-size:1rem;
   margin: 0;
-
 }
+
 .mostRecentScan > .LPnumber {
   font-size:1.5rem;
   margin: 0;
@@ -193,5 +193,20 @@ html, body {
 
   .past > .pastScans > .pastScan {
     margin: 1rem 0rem 1rem 0rem;
+  }
+}
+
+@media (min-width:1440px) {
+  .recent {
+    flex:3 1;
+  }
+
+  .mostRecentScan > img {
+    max-width: 36rem;
+  }
+
+  .mostRecentScanTextArea > p {
+    font-size: 2em;
+    margin: 0em;
   }
 }
