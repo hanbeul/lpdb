@@ -4,11 +4,12 @@ load_dotenv()
 import os
 
 RTSP_PW = os.environ.get("RTSP_PW")
-RTSP_URL = "rtsp://admin:" + RTSP_PW + "@192.168.1.90/Streaming/Channels/1"
+RTSP_URL = "rtsp://lpdb:" + RTSP_PW + "@192.168.1.66/live"
 
 vcap = cv2.VideoCapture(RTSP_URL)
 
 while(1):
   ret, frame = vcap.read()
+  frame = cv2.Canny(frame,100,200)
   cv2.imshow("VIDEO", frame)
   cv2.waitKey(1)
