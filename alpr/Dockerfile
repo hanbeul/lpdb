@@ -1,21 +1,15 @@
-FROM openalpr/openalpr
+FROM python
 
-RUN apt-get update && apt-get install -y python3 python3-pip
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6 -y
 
 WORKDIR /app
+
 COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-RUN pip3 install -r requirements.txt
-WORKDIR /srv/openalpr/src/bindings/python
-RUN python3 setup.py install
+COPY ultimateAlpr ./ultimateAlpr
 
-WORKDIR /app
-COPY . .
+COPY *.py *.env ./
 
-ENV FLASK_APP=main.py
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-ENV PYTHONPATH PYTHONPATH:/srv/openalpr/src/bindings/python/openalpr
-
-#entrypoint ["python3", "-m","flask", "run"]
-entrypoint ["python3", "main.py"]
+entrypoint ["python", "rtsp.py"]
