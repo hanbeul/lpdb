@@ -11,5 +11,6 @@ vcap = cv2.VideoCapture(RTSP_URL)
 while(1):
   ret, frame = vcap.read()
   frame = cv2.Canny(frame,100,200)
-  cv2.imshow("VIDEO", frame)
-  cv2.waitKey(1)
+  print("Captured frame!")
+  #cv2.imshow("VIDEO", frame)
+  #cv2.waitKey(1)
