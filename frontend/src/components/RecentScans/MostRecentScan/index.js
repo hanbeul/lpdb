@@ -41,6 +41,7 @@ function MostRecentScan() {
                 <p>Total Visits: &nbsp;</p>
                 <p>16</p>
             </div>
+            <Button size="large"color="red"onClick={() => editVisit('MRSNOOPY')}>Delete</Button>
         </div>
     )
 }

@@ -12,6 +12,7 @@ function PastScans() {
             'http://localhost:9000/visits', 
         );
         setVisits(res.data.slice(0,10));
+        console.log(res.data.slice(0,10));
     }, []);
 
     return (
