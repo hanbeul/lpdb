@@ -9,7 +9,7 @@ function PastScans() {
 
     useEffect(async () => {
         const res = await axios(
-            'http://localhost:9000/visits', 
+            'http://localhost:9000/api/visits', 
         );
         setVisits(res.data.slice(0,10));
         console.log(res.data.slice(0,10));
