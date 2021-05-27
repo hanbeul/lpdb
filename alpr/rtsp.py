@@ -1,16 +1,79 @@
 import cv2
+from PIL import Image
 from dotenv import load_dotenv
 load_dotenv()
 import os
+import ultimateAlprSdk
+import json
 
 RTSP_PW = os.environ.get("RTSP_PW")
 RTSP_URL = "rtsp://lpdb:" + RTSP_PW + "@192.168.1.66/live"
 
+JSON_CONFIG = {
+    "debug_level": "info",
+    "debug_write_input_image_enabled": False,
+    "debug_internal_data_path": ".",
+
+    "num_threads": -1,
+    "gpgpu_enabled": True,
+    "max_latency": -1,
+
+    "klass_vcr_gamma": 1.5,
+
+    "detect_roi": [0, 0, 0, 0],
+    "detect_minscore": 0.1,
+
+    "car_noplate_detect_min_score": 0.8,
+
+    "pyramidal_search_enabled": True,
+    "pyramidal_search_sensitivity": 0.28,
+    "pyramidal_search_minscore": 0.3,
+    "pyramidal_search_min_image_size_inpixels": 800,
+
+    "recogn_minscore": 0.3,
+    "recogn_score_type": "min",
+
+    "assets_folder": "ultimateAlpr/assets",
+    # Update JSON options using values from the command args
+    "charset": "latin",
+    "car_noplate_detect_enabled": False,
+    "ienv_enabled": True,
+    "openvino_enabled": True,
+    "openvino_device": "CPU",
+    "klass_lpci_enabled": False,
+    "klass_vcr_enabled": False,
+    "klass_vmmr_enabled": False,
+    "klass_vbsr_enabled": False,
+    "license_token_file": "",
+    "license_token_data": ""
+    }
+
+ultimateAlprSdk.UltAlprSdkEngine_init(json.dumps(JSON_CONFIG))
+
 vcap = cv2.VideoCapture(RTSP_URL)
+
 
 while(1):
   ret, frame = vcap.read()
   frame = cv2.Canny(frame,100,200)
-  print("Captured frame!")
+  # Convert from opencv image format to PIL image format
+  frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+  image = Image.fromarray(frame)
+  width, height = image.size
+  format = ultimateAlprSdk.ULTALPR_SDK_IMAGE_TYPE_RGB24
+
+  result = ultimateAlprSdk.UltAlprSdkEngine_process(
+      format,
+      image.tobytes(), # type(x) == bytes
+      width,
+      height,
+      0, # stride
+      1
+      )
+
+  print(result.json())
   #cv2.imshow("VIDEO", frame)
   #cv2.waitKey(1)
+
+ultimateAlprSdk.UltAlprSdkEngine_deInit()
