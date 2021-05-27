@@ -80,55 +80,55 @@ html, body {
 
 .recent {
   flex: 1.5;
-  background-color: #e7f0f8;
+  background-color: #EBE9E9;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction:column;
 }
 
-.mostRecentScan {
+.focusedScan {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction:column;
 }
 
-.mostRecentScan > img {
+.focusedScan > img {
   max-width: 18rem;
 }
 
-.mostRecentScan > .LPNumberDiv {
+.focusedScan > .LPNumberDiv {
   display : block;
 }
 
-.mostRecentScan > p {
+.focusedScan > p {
   font-size:1rem;
   margin: 0;
 }
 
-.mostRecentScan > .LPnumber {
+.focusedScan > .LPnumber {
   font-size:1.5rem;
   margin: 0;
 }
-.mostRecentScan > button {
+.focusedScan > button {
   font-size:1.5rem;
   margin: 0;
 }
 
-.mostRecentScanTextArea {
+.focusedScanTextArea {
   display: flex;
   padding-top: 0.5rem;
 }
 
-.mostRecentScanTextArea > p {
+.focusedScanTextArea > p {
   font-size: 1.3em;
   margin: 0em;
 }
 
 .past {
   flex: 1;
-  background-color: rgb(174, 175, 199);
+  background-color: #DEE2D6;
   overflow-x: auto;
   /* white-space: nowrap; */
   
@@ -138,14 +138,14 @@ html, body {
   align-items:center;
 }
 
-.past > .pastScans {
+.past > .scanList {
   display:flex;
   flex-direction:row;
   justify-content: flex-start;
   align-items:center;
 }
 
-.past > .pastScans > .pastScan{
+.past > .scanList > .scan{
   width:16rem;
   height:10rem;
   margin: 0rem 1rem 0rem 1rem;
@@ -155,7 +155,7 @@ html, body {
   align-items:center;
 }
 
-.pastScanImg {
+.scanImg {
   max-width:6rem;
   margin: 0.5rem;
 }
@@ -182,16 +182,16 @@ html, body {
     padding: 1rem 0rem 1rem 0rem;
   }
 
-  .past > .pastScans {
+  .past > .scanList {
     flex-direction:column;
     max-height: 1px; /*I don't know why, but setting ANY max-height here fixes vertical overflow issue. So here it is. */
   }
 
-  .mostRecentScan > img {
+  .focusedScan > img {
     max-width: 26rem;
   }
 
-  .past > .pastScans > .pastScan {
+  .past > .scanList > .scan {
     margin: 1rem 0rem 1rem 0rem;
   }
 }
@@ -201,11 +201,11 @@ html, body {
     flex:3 1;
   }
 
-  .mostRecentScan > img {
+  .focusedScan > img {
     max-width: 36rem;
   }
 
-  .mostRecentScanTextArea > p {
+  .focusedScanTextArea > p {
     font-size: 2em;
     margin: 0em;
   }

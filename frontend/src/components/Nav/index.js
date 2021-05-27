@@ -12,7 +12,7 @@ export default class Nav extends Component {
 
     return (
       <div className="nav">
-      <Menu>
+      <Menu color='blue'>
        <Link to= '/'>
           <Menu.Item
             name='recentscans'

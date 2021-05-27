@@ -3,7 +3,7 @@ import sampleLP from '../../../demo/sampleLP.jpg'
 import { Button } from 'semantic-ui-react'
 import axios from 'axios';
 
-function MostRecentScan() {
+function FocusedScan() {
     const [list, setList] = useState([]); 
 
     useEffect(async () => {
@@ -19,7 +19,7 @@ function MostRecentScan() {
     }
 
     return (
-        <div className="mostRecentScan">
+        <div className="focusedScan">
             <img src={sampleLP} />
 
             {/* <ul>
@@ -28,16 +28,16 @@ function MostRecentScan() {
                 }
                 )}
             </ul> */}
-            <div className="mostRecentScanTextArea">
+            <div className="focusedScanTextArea">
                 <p>Plate #: &nbsp;</p>
                 <p>MRSNOOPY &nbsp;</p>
                 <Button size="mini" onClick={() => editVisit('MRSNOOPY')}>Edit</Button>
             </div>
-            <div className="mostRecentScanTextArea">
+            <div className="focusedScanTextArea">
                 <p>Date of Visit: &nbsp;</p>
                 <p>5/15/2020, 1:19:25 AM</p>
             </div>
-            <div className="mostRecentScanTextArea">
+            <div className="focusedScanTextArea">
                 <p>Total Visits: &nbsp;</p>
                 <p>16</p>
             </div>
@@ -46,4 +46,4 @@ function MostRecentScan() {
     )
 }
 
-export default MostRecentScan
+export default FocusedScan

@@ -4,7 +4,7 @@ import axios from 'axios';
 import sampleLP from '../../../demo/sampleLP.jpg'
 
 
-function PastScans() {
+function ScanList() {
     const [visits, setVisits] = useState([]);
 
     useEffect(async () => {
@@ -16,12 +16,12 @@ function PastScans() {
     }, []);
 
     return (
-        <div className="pastScans">
+        <div className="scanList">
             {visits.map(visit => {
                 return (
-                    <Segment className="pastScan">
+                    <Segment className="scan">
                         <div>
-                            <img src={sampleLP} className="pastScanImg"></img>
+                            <img src={sampleLP} className="scanImg"></img>
                         </div>
                         <div>
                             <p>{visit.Customer}</p>
@@ -35,4 +35,4 @@ function PastScans() {
     )
 }
 
-export default PastScans;
+export default ScanList;
