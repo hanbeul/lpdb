@@ -13,23 +13,34 @@ export default class Nav extends Component {
     return (
       <div className="nav">
       <Menu>
-        <Link to= '/'>
+       <Link to= '/'>
           <Menu.Item
-            name='home'
-            active={activeItem === 'home'}
+            name='recentscans'
+            active={activeItem === 'recentscans'}
             onClick={this.handleItemClick}
           >
-            <Icon name='home' />
-            Home
+            <Icon name='search' />
+            Recent Scans
           </Menu.Item>
         </Link>
-        <Link to= '/page2'>
+        <Link to= '/dashboard'>
+          <Menu.Item
+            name='dashboard'
+            active={activeItem === 'dashboard'}
+            onClick={this.handleItemClick}
+          >
+            <Icon name='dashboard' />
+            Dashboard
+          </Menu.Item>
+        </Link>
+        {/* <Link to= '/page2'>
           <Menu.Item
             name='page 2'
             active={activeItem === 'page 2'}
             onClick={this.handleItemClick}
           >
-            Page 2
+            <Icon name='database' />
+            Database
           </Menu.Item>
         </Link>
         <Link to= '/page3'>
@@ -38,17 +49,18 @@ export default class Nav extends Component {
             active={activeItem === 'page 3'}
             onClick={this.handleItemClick}
           >
-            Page 3
+            <Icon name='arrow alternate circle down' />
+            Input
           </Menu.Item>
-        </Link>
-        <Link to= '/settings'>
+        </Link> */}
+        <Link to= '/visits'>
           <Menu.Item
-            name='upcomingEvents'
-            active={activeItem === 'upcomingEvents'}
+            name='visits'
+            active={activeItem === 'visits'}
             onClick={this.handleItemClick}
           >
-            <Icon name='settings' />
-            Settings
+            <Icon name='car' />
+            Visits
           </Menu.Item>
         </Link>
       </Menu>

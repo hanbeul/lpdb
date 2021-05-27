@@ -1,26 +1,51 @@
-.App {
-  text-align: center;
+html, body {
+  height:100%;
+  margin: 0;
+}
+
+
+#root, #root > div {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
+.mainDiv {
+  display:flex;
+  flex-direction:column;
+  height:100%;
 }
 
 .title {
-  padding: 1.5rem;
+  padding: 0.7rem;
+  flex: 0 1 auto;
 }
 
 .nav {
+  flex: 0 1 auto;
 }
 
 .footer{
   text-align: center;
-  padding: 1.5rem;
-  /* position: fixed; */
+  position: absolute;
   bottom: 0;
   right: 0;
   width:100%;
+  height: 5%;
   border-top: 1.5px solid lightgrey;
+  background-color: white;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .footer > .footerText {
   color:#9AA0AC;
+  font-size:11px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .view {
@@ -42,4 +67,146 @@
   font-size: 1rem;
   text-align: center;
   color: #5EBA00;
+}
+
+
+/*following are CSS for RecentScans view*/
+
+.recentScansPage {
+  display:flex;
+  flex-direction:column;
+  flex: 1 1 auto;
+}
+
+.recent {
+  flex: 1.5;
+  background-color: #e7f0f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+}
+
+.mostRecentScan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column;
+}
+
+.mostRecentScan > img {
+  max-width: 18rem;
+}
+
+.mostRecentScan > .LPNumberDiv {
+  display : block;
+}
+
+.mostRecentScan > p {
+  font-size:1rem;
+  margin: 0;
+}
+
+.mostRecentScan > .LPnumber {
+  font-size:1.5rem;
+  margin: 0;
+}
+.mostRecentScan > button {
+  font-size:1.5rem;
+  margin: 0;
+}
+
+.mostRecentScanTextArea {
+  display: flex;
+  padding-top: 0.5rem;
+}
+
+.mostRecentScanTextArea > p {
+  font-size: 1.3em;
+  margin: 0em;
+}
+
+.past {
+  flex: 1;
+  background-color: rgb(174, 175, 199);
+  overflow-x: auto;
+  /* white-space: nowrap; */
+  
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.past > .pastScans {
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.past > .pastScans > .pastScan{
+  width:16rem;
+  height:10rem;
+  margin: 0rem 1rem 0rem 1rem;
+
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.pastScanImg {
+  max-width:6rem;
+  margin: 0.5rem;
+}
+
+.pastTitle {
+  font-size:1.1em;
+  margin:0;
+  text-align:center;
+  background-color: rgb(174, 175, 199);
+}
+
+@media (min-width:768px) {
+  .recentScansPage {
+    flex-direction:row;
+  }
+
+  .recent {
+    flex:2 1;
+  }
+
+  .past {
+    flex-direction:column;
+    overflow-y:auto;
+    padding: 1rem 0rem 1rem 0rem;
+  }
+
+  .past > .pastScans {
+    flex-direction:column;
+    max-height: 1px; /*I don't know why, but setting ANY max-height here fixes vertical overflow issue. So here it is. */
+  }
+
+  .mostRecentScan > img {
+    max-width: 26rem;
+  }
+
+  .past > .pastScans > .pastScan {
+    margin: 1rem 0rem 1rem 0rem;
+  }
+}
+
+@media (min-width:1440px) {
+  .recent {
+    flex:3 1;
+  }
+
+  .mostRecentScan > img {
+    max-width: 36rem;
+  }
+
+  .mostRecentScanTextArea > p {
+    font-size: 2em;
+    margin: 0em;
+  }
 }
