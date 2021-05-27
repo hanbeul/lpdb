@@ -55,11 +55,11 @@ vcap = cv2.VideoCapture(RTSP_URL)
 
 while(1):
   ret, frame = vcap.read()
-  frame = cv2.Canny(frame,100,200)
+  #frame = cv2.Canny(frame,100,200)
   # Convert from opencv image format to PIL image format
-  frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+  
 
-  image = Image.fromarray(frame)
+  image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
   width, height = image.size
   format = ultimateAlprSdk.ULTALPR_SDK_IMAGE_TYPE_RGB24
 
@@ -72,8 +72,15 @@ while(1):
       1
       )
 
-  print(result.json())
-  #cv2.imshow("VIDEO", frame)
-  #cv2.waitKey(1)
+  result = json.loads(result.json())
+  output = []
+  if "plates" in result.keys():
+    for x in result["plates"]:
+      output.append(x["text"])
+
+
+  print(output)
+  cv2.imshow("VIDEO", frame)
+  cv2.waitKey(1)
 
 ultimateAlprSdk.UltAlprSdkEngine_deInit()
