@@ -9,7 +9,7 @@ function Visits() {
 
     useEffect(async () => {
         const res = await axios(
-            'http://localhost:9000/visits',
+            'http://localhost:9000/api/visits',
         );
         setList(res.data);
         console.log(res.data);

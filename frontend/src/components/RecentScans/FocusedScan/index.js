@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import sampleLP from '../../../demo/sampleLP.jpg'
 import { Button } from 'semantic-ui-react'
 import axios from 'axios';
+import { Header } from 'semantic-ui-react'
 
 function FocusedScan() {
     const [list, setList] = useState([]); 
@@ -20,14 +21,8 @@ function FocusedScan() {
 
     return (
         <div className="focusedScan">
+            <Header as="h2">Scan # (Sequential Number)</Header>
             <img src={sampleLP} />
-
-            {/* <ul>
-                {list.map(item => {
-                    return <li>{item.Customer}</li>
-                }
-                )}
-            </ul> */}
             <div className="focusedScanTextArea">
                 <p>Plate #: &nbsp;</p>
                 <p>MRSNOOPY &nbsp;</p>

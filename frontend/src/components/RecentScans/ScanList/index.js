@@ -1,23 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { Segment, Button } from 'semantic-ui-react'
-import axios from 'axios';
 import sampleLP from '../../../demo/sampleLP.jpg'
 
 
-function ScanList() {
-    const [visits, setVisits] = useState([]);
+function ScanList(props) {
+    const [currentPage, setCurrentPage] = useState();
+    const [currentPagesVisits, setCurrentPagesVisits] = useState([]);
+    const [focus, setFocus] = useState([]);
 
-    useEffect(async () => {
-        const res = await axios(
-            'http://localhost:9000/api/visits', 
-        );
-        setVisits(res.data.slice(0,10));
-        console.log(res.data.slice(0,10));
-    }, []);
+    useEffect(() => {
+        setCurrentPagesVisits(props.currentPagesVisits);
+        setCurrentPage(props.currentPage);
+    },[props.currentPagesVisits])
+
 
     return (
         <div className="scanList">
-            {visits.map(visit => {
+            {currentPagesVisits.map(visit => {
                 return (
                     <Segment className="scan">
                         <div>
