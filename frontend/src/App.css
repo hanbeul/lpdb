@@ -190,6 +190,10 @@ html, body {
   margin-left: 1rem;
 }
 
+.off {
+  color:#FCB07E!important;
+}
+
 @media (min-width:768px) {
   .title {
     display:block;
