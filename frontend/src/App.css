@@ -148,6 +148,10 @@ html, body {
   align-items:center;
 }
 
+.past > .scanList > #focused {
+  background-color: #3581B8;
+}
+
 .past > .scanList > .scan{
   width:16rem;
   height:10rem;

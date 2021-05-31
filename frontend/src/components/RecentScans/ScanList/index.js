@@ -11,19 +11,22 @@ function ScanList(props) {
         setCurrentPagesVisits(props.currentPagesVisits);
     },[props.currentPagesVisits])
 
+    useEffect(() => {
+        setFocus(props.focus);
+    },[props.focus])
 
     return (
         <div className="scanList">
             {currentPagesVisits.map(visit => {
                 return (
-                    <Segment className="scan">
+                    <Segment className="scan" id={visit.id.$oid == focus.id.$oid ? "focused" : ""}>
                         <div>
                             <img src={sampleLP} className="scanImg"></img>
                         </div>
                         <div>
                             <p>{visit.Customer}</p>
                             <p>{new Date(visit.dateTime.$date).toLocaleString()}</p>
-                            <Button size="tiny">View</Button>
+                            <Button size="tiny" value={visit.id.$oid} onClick={props.handleFocusChange}>View</Button>
                         </div>
                     </Segment>
                 )

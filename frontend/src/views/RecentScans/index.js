@@ -88,6 +88,16 @@ function RecentScans() {
         else if (currentPage >= lastPage) { }
         else {setCurrentPage(currentPage + 1);}
     }
+
+    const handleFocusChange = e => {
+        let focusedElementId = e.target.value;
+        for (let i=0; i < currentPagesVisits.length; i++ ) {
+            if (focusedElementId == currentPagesVisits[i].id.$oid) {
+                setFocus(currentPagesVisits[i]);
+                break;
+            }
+        }
+    };
         
 
     return (
@@ -106,7 +116,7 @@ function RecentScans() {
                     <Header>Scans #: {startIndex}-{endIndex}</Header>
                     <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div>
                 </div>
-                <ScanList focus={focus} currentPagesVisits={currentPagesVisits}/>
+                <ScanList focus={focus} handleFocusChange={handleFocusChange} currentPagesVisits={currentPagesVisits}/>
             </div>
         </div>
         
