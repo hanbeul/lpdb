@@ -4,13 +4,11 @@ import sampleLP from '../../../demo/sampleLP.jpg'
 
 
 function ScanList(props) {
-    const [currentPage, setCurrentPage] = useState();
     const [currentPagesVisits, setCurrentPagesVisits] = useState([]);
     const [focus, setFocus] = useState([]);
 
     useEffect(() => {
         setCurrentPagesVisits(props.currentPagesVisits);
-        setCurrentPage(props.currentPage);
     },[props.currentPagesVisits])
 
 

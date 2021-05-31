@@ -17,9 +17,11 @@ function RecentScans() {
             'http://localhost:9000/api/visits',
         );
         setVisits(res.data);
-        let lastIndex = res.data.length - 1; //this part gets the newest scan, assuming newest scan will be the last object in the JSON.
 
-        setFocus(res.data[lastIndex]);
+        let lastIndex = res.data.length - 1; //this part gets the newest scan, assuming newest scan will be the last object in the JSON.
+        let initialFocus = res.data[lastIndex];
+        initialFocus.index = lastIndex; //assigns index as part of data, so I can use it in the child component
+        setFocus(initialFocus);
 
         //Below is a sad hack, since I can't get the visits state to update the first time around properly.
         //This part updates the currentPagesVisits state at component mounting, then 
@@ -35,6 +37,10 @@ function RecentScans() {
     },[]);
 
     useEffect(() => {
+        setFocus(focus);
+    },[focus])
+
+    useEffect(() => {
         const startIndex = visits.length - Number((currentPage - 1) + '1');
         setStartIndex(startIndex);
         const endIndex = visits.length - (currentPage * 10);
@@ -46,44 +52,61 @@ function RecentScans() {
 
     const handleLeftArrow = () => {
         //some of the mess below is to change the arrow colors when there is no more pages to turn to. 
+        let leftArrows = document.getElementsByClassName("leftArrow");
+        let rightArrows = document.getElementsByClassName("rightArrow");
         if (currentPage == 1) { } //do nothing
         else if (currentPage == 2) {
-            document.getElementById("leftArrow").classList.add("off");
+            for (let i=0; i<leftArrows.length; i++) {
+                leftArrows[i].classList.add("off");
+            }
             setCurrentPage(currentPage - 1);
         }
         else {
-            document.getElementById("rightArrow").classList.remove("off");
+            for (let i=0; i<rightArrows.length; i++) {
+                rightArrows[i].classList.remove("off");
+            }
             setCurrentPage(currentPage - 1);
         }
     }
 
     const handleRightArrow = () => {
+        let leftArrows = document.getElementsByClassName("leftArrow");
+        let rightArrows = document.getElementsByClassName("rightArrow");
         const lastPage = Math.round(visits.length/10);
         if (currentPage <= 1) {
             setCurrentPage(currentPage + 1);
-            document.getElementById("leftArrow").classList.remove("off")
+            for (let i=0; i<leftArrows.length; i++) {
+                leftArrows[i].classList.remove("off");
+            }
         }
         else if (currentPage == lastPage -1) {
             setCurrentPage(currentPage + 1)
-            document.getElementById("rightArrow").classList.add("off")
+            for (let i=0; i<rightArrows.length; i++) {
+                rightArrows[i].classList.add("off");
+            }
         }
         else if (currentPage >= lastPage) { }
-        else {setCurrentPage(currentPage + 1); console.log(currentPage + '  ' + lastPage)}
+        else {setCurrentPage(currentPage + 1);}
     }
         
 
     return (
         <div className="recentScansPage">
             <div className="recent">
-                <FocusedScan />
+                <FocusedScan focus={focus} />
             </div>
             <div className="pastTitle">
-                <div id="leftArrow" className="leftArrow off" onClick={handleLeftArrow}>&lt;</div>
+                <div id="leftArrow" className="leftArrow off noselect" onClick={handleLeftArrow}>&lt;</div>
                 <Header>Scans #: {startIndex}-{endIndex}</Header>
-                <div id="rightArrow" className="rightArrow" onClick={handleRightArrow}>&gt;</div>
+                <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div>
             </div>
             <div className="past">
-                <ScanList focus={focus} currentPage={currentPage} currentPagesVisits={currentPagesVisits}/>
+                <div className="pastTitleLgMedia">
+                    <div id="leftArrow" className="leftArrow off noselect " onClick={handleLeftArrow}>&lt;</div>
+                    <Header>Scans #: {startIndex}-{endIndex}</Header>
+                    <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div>
+                </div>
+                <ScanList focus={focus} currentPagesVisits={currentPagesVisits}/>
             </div>
         </div>
         
