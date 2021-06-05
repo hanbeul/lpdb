@@ -11,6 +11,7 @@ let app = express(),
 
 create = function() {
   let routes = require('./routes');
+  let db = require('./db.js');
 
   //Middleware
   app.use(bodyParser.json());
@@ -19,6 +20,11 @@ create = function() {
 
   //Setup routes
   routes.init(app);
+
+  // db.insert();
+  // db.update();
+  db.delete();
+  // db.close();
 }
 
 start = function() {

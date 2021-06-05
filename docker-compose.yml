@@ -11,6 +11,7 @@ services:
       - 9000:9000
     volumes:
       - "./backend/src:/app/src"
+      - "./backend/db:/app/db"
 
   frontend:
     build: ./frontend

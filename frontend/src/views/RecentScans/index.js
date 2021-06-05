@@ -96,7 +96,7 @@ function RecentScans() {
                 setFocus(currentPagesVisits[i]);
                 break;
             }
-        }
+        } 
     };
         
 
