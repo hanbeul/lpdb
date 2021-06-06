@@ -8,36 +8,58 @@
     console.log('Connected to the test SQlite database.');
   });
 
-  // let sql = `SELECT DISTINCT Name name FROM playlists
-  //            ORDER BY name`;
+  module.exports.getVisits = () => {
+    let sql = `SELECT 
+                visit_id,
+                visit_date,
+                plate_id
+            FROM
+                visits`
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      rows.forEach((row) => {
+        console.log(row.visit_id + ',' + row.plate_id + ',' + row.visit_date);
+      });
+    });
+  }
 
-  // module.exports.all = () => {
-  //   db.all(sql, [], (err, rows) => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //     rows.forEach((row) => {
-  //       console.log(row.name);
-  //     });
-  //   });
-  // }
+  db.run(`CREATE TABLE IF NOT EXISTS visits (
+                  visit_id integer PRIMARY KEY,
+                  visit_date text,
+                  plate_number text NOT NULL,
+                  FOREIGN KEY (plate_number)
+                    REFERENCES plates (plate_number)
+  )`)
 
-  // db.run('CREATE TABLE langs(name text)');
+  db.run(`CREATE TABLE IF NOT EXISTS plates (
+                  plate_id integer PRIMARY KEY,
+                  plate_number text NOT NULL UNIQUE,
+                  total_visits integer
+  )`)
+
+  // db.run(`DROP TABLE visits`);
+  // db.run(`DROP TABLE plates`);
+
 
   module.exports.insert = () => {
-    db.run(`INSERT INTO langs(name) VALUES(?)`, ['C'], function(err) {
-        if (err) {
-          return console.log(err.message);
+    db.run(`INSERT INTO visits(plate_id, visit_date) 
+            VALUES(?, ?)`, 
+            ['123456', Date()], 
+          function(err) {
+            if (err) {
+              return console.log(err.message);
+            }
+            console.log(`A row has been inserted with rowid ${this.lastID}`);
+          })
         }
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
-      })
-    }
 
   module.exports.update = () => {
-    let data = ['Ansi C', 'C'];
-    let sql = `UPDATE langs
-                SET name = ?
-                WHERE name = ?`;
+    let data = ['654321', '123456'];
+    let sql = `UPDATE visits
+                SET plate_id = ?
+                WHERE plate_id = ?`;
 
     db.run(sql, data, function(err) {
       if (err) {
@@ -49,7 +71,9 @@
 
   module.exports.delete = () => {
     let id = 1;
-    db.run(`DELETE FROM langs WHERE rowid=?`, id, function(err) {
+    let sql = `DELETE FROM visits 
+               WHERE rowid = ?`
+    db.run(sql, id, function(err) {
       if (err) {
         return console.error(err.message);
       }

@@ -21,9 +21,13 @@ create = function() {
   //Setup routes
   routes.init(app);
 
+  //DB methods testing area. Don't need to run any DB methods, btw, to init 
+  //the DB; just requiring it above will make the connection. 
+  //Because I did not wrap the connection code in any function or class. 
+  // db.getVisits();
   // db.insert();
   // db.update();
-  db.delete();
+  // db.delete();
   // db.close();
 }
 
