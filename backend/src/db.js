@@ -1,4 +1,4 @@
-  //Database testing
+  //Connect DB
   const sqlite3 = require('sqlite3').verbose();
 
   let db = new sqlite3.Database('./db/test.db', (err) => {
@@ -8,6 +8,11 @@
     console.log('Connected to the test SQlite database.');
   });
 
+  //Turn foreign key constraints on
+  db.get("PRAGMA foreign_keys = ON");
+
+
+  //CRUD operations
   module.exports.getVisits = () => {
     let sql = `SELECT 
                 visit_id,
@@ -25,35 +30,92 @@
     });
   }
 
+  module.exports.getPlates = () => {
+    let sql = `SELECT
+                plate_id,
+                plate_number
+              FROM
+                plates`
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      rows.forEach((row) => {
+        console.log(row.plate_id + ',' + row.plate_number)
+      });
+    });
+  }
+
+  module.exports.getPlateId = () => {
+    let sql = `SELECT
+                plate_id
+              FROM
+                plates
+              WHERE
+                plate_number = 'TEST001'`
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      rows.forEach((row) => {
+        console.log(row.plate_id)
+      });
+    });
+  }
+
   db.run(`CREATE TABLE IF NOT EXISTS visits (
                   visit_id integer PRIMARY KEY,
                   visit_date text,
-                  plate_number text NOT NULL,
-                  FOREIGN KEY (plate_number)
-                    REFERENCES plates (plate_number)
+                  plate_id text NOT NULL,
+                  FOREIGN KEY (plate_id)
+                    REFERENCES plates (plate_id)
   )`)
 
   db.run(`CREATE TABLE IF NOT EXISTS plates (
                   plate_id integer PRIMARY KEY,
-                  plate_number text NOT NULL UNIQUE,
-                  total_visits integer
+                  plate_number text NOT NULL UNIQUE
   )`)
 
   // db.run(`DROP TABLE visits`);
   // db.run(`DROP TABLE plates`);
 
 
-  module.exports.insert = () => {
-    db.run(`INSERT INTO visits(plate_id, visit_date) 
-            VALUES(?, ?)`, 
-            ['123456', Date()], 
+  module.exports.insertPlate = () => {
+    db.run(`INSERT INTO plates(plate_number)
+            VALUES(?)`,
+            ['TEST001'],
           function(err) {
             if (err) {
               return console.log(err.message);
             }
-            console.log(`A row has been inserted with rowid ${this.lastID}`);
-          })
-        }
+            console.log(`A row in plates has been inserted with rowid ${this.lastID}`);
+            })
+  }
+
+  module.exports.insertVisit = () => {
+    let selectPlateId = `SELECT
+                plate_id
+              FROM
+                plates
+              WHERE
+                plate_number = 'TEST001'`
+    db.all(selectPlateId, [], (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      let plate_id = rows[0].plate_id;
+
+      db.run(`INSERT INTO visits(plate_id, visit_date) 
+              VALUES(?, ?)`, 
+              [plate_id, Date()], 
+            function(err) {
+              if (err) {
+                return console.log(err.message);
+              }
+              console.log(`A row in visits has been inserted with rowid ${this.lastID}`);
+            })
+    });
+    }
 
   module.exports.update = () => {
     let data = ['654321', '123456'];
@@ -90,47 +152,3 @@
     });
   }
 
-
-
-
-
-
-
-
-// const MongoClient = require('mongodb').MongoClient;
-
-// let _db;
-// let url = 'mongodb://localhost:27017';
-// let dbName = 'lpdb';
-
-// module.exports.init = async () => {
-//   MongoClient.connect(url, function(err, client) {
-//     if (err) {
-//       console.log('An error has occured: ' + err);
-//       return;
-//     }
-//     console.log("Connected successfully to server");
-//     _db = client.db(dbName);
-//   });
-// }
-
-// module.exports.insert = async (data) => {
-//   _db.collection('plates').insertOne(data, (error, result) => {
-//     if (error) {
-//       console.log('An error has occured: ' + error);
-//       return error;
-//     }
-//     console.log('Sucessfully inserted record!')
-//   });
-// }
-
-// module.exports.find = async (query) => {
-//   let output = [];
-  
-//   output = _db.collection('plates').find({}).sort({timestamp: -1}).limit(10).toArray();
-//   return output;
-// }
-
-// module.exports.close = function() {
-//   _db.close();
-// }

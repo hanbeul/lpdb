@@ -25,7 +25,9 @@ create = function() {
   //the DB; just requiring it above will make the connection. 
   //Because I did not wrap the connection code in any function or class. 
   // db.getVisits();
-  // db.insert();
+  // db.getPlates();
+  // db.insertPlate();
+  db.insertVisit();
   // db.update();
   // db.delete();
   // db.close();
