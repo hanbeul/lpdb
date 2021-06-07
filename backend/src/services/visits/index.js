@@ -10,6 +10,11 @@ function getVisits(req, res) {
     })
 }
 
+function postVisit(req, res) {
+  console.log(req.body);
+}
+
 module.exports = {
-    getVisits : getVisits
+  getVisits : getVisits,
+  postVisit: postVisit
 };

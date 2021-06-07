@@ -4,6 +4,7 @@ const
 
 let router = express.Router();
 
-router.get('/', visitService.getVisits);
+router.get('/', visitService.getVisits)
+  .post('/', visitService.postVisit);
 
 module.exports = router;
