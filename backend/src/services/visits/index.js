@@ -12,6 +12,9 @@ function getVisits(req, res) {
 
 function postVisit(req, res) {
   console.log(req.body);
+  const plate = req.body.plate;
+  const timestamp = Date(req.body.timestamp)
+  res.send(200);
 }
 
 module.exports = {
