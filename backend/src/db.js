@@ -80,41 +80,52 @@
   // db.run(`DROP TABLE plates`);
 
 
-  module.exports.insertPlate = () => {
-    db.run(`INSERT INTO plates(plate_number)
-            VALUES(?)`,
-            ['TEST001'],
-          function(err) {
-            if (err) {
-              return console.log(err.message);
-            }
-            console.log(`A row in plates has been inserted with rowid ${this.lastID}`);
-            })
-  }
+  // module.exports.insertPlate = () => {
+  //   db.run(`INSERT INTO plates(plate_number)
+  //           VALUES(?)`,
+  //           ['TEST001'],
+  //         function(err) {
+  //           if (err) {
+  //             return console.log(err.message);
+  //           }
+  //           console.log(`A row in plates has been inserted with rowid ${this.lastID}`);
+  //           })
+  // }
 
   module.exports.insertVisit = () => {
-    let selectPlateId = `SELECT
-                plate_id
-              FROM
-                plates
-              WHERE
-                plate_number = 'TEST001'`
-    db.all(selectPlateId, [], (err, rows) => {
-      if (err) {
-        throw err;
-      }
-      let plate_id = rows[0].plate_id;
-
-      db.run(`INSERT INTO visits(plate_id, visit_date) 
-              VALUES(?, ?)`, 
-              [plate_id, Date()], 
+    db.serialize(() => {
+      db.run(`INSERT INTO plates(plate_number)
+              VALUES(?)`,
+              [req.body.plate],
             function(err) {
               if (err) {
                 return console.log(err.message);
               }
-              console.log(`A row in visits has been inserted with rowid ${this.lastID}`);
-            })
-    });
+              console.log(`A row in plates has been inserted with rowid ${this.lastID}`);
+              })
+    })
+      let selectPlateId = `SELECT
+                  plate_id
+                FROM
+                  plates
+                WHERE
+                  plate_number = ${req.body.plate}`
+      db.all(selectPlateId, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        let plate_id = rows[0].plate_id;
+
+        db.run(`INSERT INTO visits(plate_id, visit_date) 
+                VALUES(?, ?)`, 
+                [plate_id, Date(req.body.timestamp)], 
+              function(err) {
+                if (err) {
+                  return console.log(err.message);
+                }
+                console.log(`A row in visits has been inserted with rowid ${this.lastID}`);
+              })
+      });
     }
 
   module.exports.update = () => {

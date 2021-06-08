@@ -27,7 +27,7 @@ create = function() {
   // db.getVisits();
   // db.getPlates();
   // db.insertPlate();
-  db.insertVisit();
+  // db.insertVisit();
   // db.update();
   // db.delete();
   // db.close();
