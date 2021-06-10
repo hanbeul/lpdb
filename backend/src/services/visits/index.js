@@ -22,12 +22,20 @@ function postVisit(req, res) {
   console.log(req.body);
   const plate = req.body.plate;
   const timestamp = Date(req.body.timestamp)
-  res.send(200);
   db.insertVisit(plate, timestamp);
+  res.send(200);
+}
+
+function updateVisit(req, res) {
+  let visitId = req.params.id;
+  let plateNumber = req.body.plate_number;
+  db.updateVisit(visitId, plateNumber);
+  res.send(200);
 }
 
 module.exports = {
   getVisits : getVisits,
   postVisit: postVisit,
-  getTotalVisits: getTotalVisits
+  getTotalVisits: getTotalVisits,
+  updateVisit: updateVisit
 };

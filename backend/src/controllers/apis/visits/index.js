@@ -6,6 +6,7 @@ let router = express.Router();
 
 router.get('/', visitService.getVisits)
       .get('/:id', visitService.getTotalVisits)
-  .post('/', visitService.postVisit);
+      .post('/', visitService.postVisit)
+      .put('/:id', visitService.updateVisit)
 
 module.exports = router;

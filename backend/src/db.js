@@ -136,20 +136,34 @@ module.exports.insertVisit = (plate, timestamp) => {
   })
 }
 
-module.exports.update = () => {
-  let data = ['654321', '123456'];
-  let sql = `UPDATE visits
-              SET plate_id = ?
-              WHERE plate_id = ?`;
+//UPDATE (UPDATE)
+module.exports.updateVisit = (visitId, plateNumber) => {
+  db.all(`SELECT
+            plate_id
+          FROM
+            plates
+          WHERE
+            plate_number = '${plateNumber}'`,
+        [], function(err, rows) {
+          if (err) {
+            return console.log(err.message);
+          }
 
-  db.run(sql, data, function(err) {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log(`Row(s) updated: ${this.changes}`);
-  });
+          let newPlateId = rows[0].plate_id;
+
+          db.run(`UPDATE visits
+                  SET plate_id = '${newPlateId}'
+                  WHERE visit_id = '${visitId}'`, 
+          [], function(err) {
+          if (err) {
+            return console.error(err.message);
+          }
+          console.log(`Row(s) updated: ${this.changes}`);
+          });
+      })
 }
 
+//DELETE (DELETE)
 module.exports.delete = () => {
   let id = 1;
   let sql = `DELETE FROM visits 
