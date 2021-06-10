@@ -26,7 +26,6 @@ create = function() {
   //Because I did not wrap the connection code in any function or class. 
   // db.getVisits();
   // db.getPlates();
-  // db.insertPlate();
   // db.insertVisit();
   // db.update();
   // db.delete();
@@ -41,38 +40,3 @@ start = function() {
 
 create();
 start();
-
-
-//const db = require('./db.js');
-//db.init();
-
-// app.get('/', async (req, res) => {
-//   let x = await fetch('http://alpr:5000');
-//   x = await x.text();
-//   res.send(x);
-// });
-
-// let plates = {};
-
-// app.get('/lpdb', async (req, res) => {
-//   res.send(plates);
-// });
-
-// app.post('/lpdb', async (req, res) => {
-//   console.log('Received post request! ');
-//   let body = req.body;
-
-//   //body.timestamp = new Date();
-
-//   console.log(body);
-
-//   if (body.plate in plates) {
-//     plates[body.plate]++;
-//   } else {
-//     plates[body.plate] = 1;
-//   }
-
-//   //console.log(body);
-//   //db.insert(body);
-//   res.send('POST request to homepage');
-// });

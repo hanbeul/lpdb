@@ -19,14 +19,14 @@ function ScanList(props) {
         <div className="scanList">
             {currentPagesVisits.map(visit => {
                 return (
-                    <Segment className="scan" id={visit.id.$oid == focus.id.$oid ? "focused" : ""}>
+                    <Segment className="scan" id={visit.visit_id == focus.visit_id ? "focused" : ""}>
                         <div>
                             <img src={sampleLP} className="scanImg"></img>
                         </div>
                         <div>
-                            <p>{visit.Customer}</p>
-                            <p>{new Date(visit.dateTime.$date).toLocaleString()}</p>
-                            <Button size="tiny" value={visit.id.$oid} onClick={props.handleFocusChange}>View</Button>
+                            <p>{visit.plate_number}</p>
+                            <p>{new Date(visit.visit_date).toLocaleString()}</p>
+                            <Button size="tiny" value={visit.visit_id} onClick={props.handleFocusChange}>View</Button>
                         </div>
                     </Segment>
                 )

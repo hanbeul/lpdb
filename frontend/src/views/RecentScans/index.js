@@ -92,7 +92,7 @@ function RecentScans() {
     const handleFocusChange = e => {
         let focusedElementId = e.target.value;
         for (let i=0; i < currentPagesVisits.length; i++ ) {
-            if (focusedElementId == currentPagesVisits[i].id.$oid) {
+            if (focusedElementId == currentPagesVisits[i].visit_id) {
                 setFocus(currentPagesVisits[i]);
                 break;
             }

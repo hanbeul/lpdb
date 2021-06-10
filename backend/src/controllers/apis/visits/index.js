@@ -5,6 +5,7 @@ const
 let router = express.Router();
 
 router.get('/', visitService.getVisits)
+      .get('/:id', visitService.getTotalVisits)
   .post('/', visitService.postVisit);
 
 module.exports = router;

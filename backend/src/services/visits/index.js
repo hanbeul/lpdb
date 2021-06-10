@@ -1,13 +1,21 @@
 const fs = require('fs');
 const path = require('path');
-visitsFilePath = path.join(__dirname, '../../sampleData/visits.json');
+const db = require('../../db')
+
 
 function getVisits(req, res) {
-    fs.readFile(visitsFilePath, function read(err, data) {
-        if (err) throw err;
-        const content = JSON.parse(data);
-        res.send(content);
-    })
+  db.getVisits((err, result) => {
+    if (err) throw err; 
+    res.send(result);
+  });
+}
+
+function getTotalVisits(req, res) {
+  plateId = req.params.id;
+  db.getTotalVisits(plateId, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
 }
 
 function postVisit(req, res) {
@@ -15,9 +23,11 @@ function postVisit(req, res) {
   const plate = req.body.plate;
   const timestamp = Date(req.body.timestamp)
   res.send(200);
+  db.insertVisit(plate, timestamp);
 }
 
 module.exports = {
   getVisits : getVisits,
-  postVisit: postVisit
+  postVisit: postVisit,
+  getTotalVisits: getTotalVisits
 };
