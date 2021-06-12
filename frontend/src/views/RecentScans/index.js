@@ -98,12 +98,23 @@ function RecentScans() {
             }
         } 
     };
-        
 
+    //Commenting below out for now; I will come back to implementing
+    //refreshing the focus update when plate number is edited
+    //when API refactor occurs to make smaller, incremental GET requests
+    //for the data. As of now, I cannot reasonably add this feature. 
+    // const handleFocusEdit = async (updateFocus) => {
+    //     const res = await axios(
+    //         'http://localhost:9000/api/visits',
+    //     );
+    //     setVisits(res.data);
+    //     updateFocus()
+    // }
+        
     return (
         <div className="recentScansPage">
             <div className="recent">
-                <FocusedScan focus={focus} />
+                <FocusedScan focus={focus}/>
             </div>
             <div className="pastTitle">
                 <div id="leftArrow" className="leftArrow off noselect" onClick={handleLeftArrow}>&lt;</div>

@@ -138,28 +138,74 @@ module.exports.insertVisit = (plate, timestamp) => {
 
 //UPDATE (UPDATE)
 module.exports.updateVisit = (visitId, plateNumber) => {
-  db.all(`SELECT
-            plate_id
+  db.all(`SELECT COUNT(*)
           FROM
-            plates
+              plates
           WHERE
-            plate_number = '${plateNumber}'`,
-        [], function(err, rows) {
-          if (err) {
-            return console.log(err.message);
-          }
+              plate_number = '${plateNumber}'`,
+      [], function(err, count) {
+        if (err) {
+          return console.log(err.message);
+        }
+        let exists = (count[0]['COUNT(*)']);
+        if (exists > 0) {
+          db.all(`SELECT
+                    plate_id
+                  FROM
+                    plates
+                  WHERE
+                    plate_number = '${plateNumber}'`,
+                [], function(err, rows) {
+                  if (err) {
+                    return console.log(err.message);
+                  }
+                  let newPlateId = rows[0].plate_id;
+                  db.run(`UPDATE visits
+                          SET plate_id = '${newPlateId}'
+                          WHERE visit_id = '${visitId}'`, 
+                  [], function(err) {
+                  if (err) {
+                    return console.error(err.message);
+                  }
+                  console.log(`Row(s) updated: ${this.changes} with a pre-existing plate number.`);
+                  });
+              })
+        }
+        if (exists == 0) {
+          db.run(`INSERT INTO 
+                      plates(plate_number)
+                      VALUES(?)`,
+                      [plateNumber],
+                    function(err) {
+                      if (err) {
+                        return console.log(err.message);
+                      }
+                      console.log(`A row in plates has been inserted with rowid ${this.lastID}`);
 
-          let newPlateId = rows[0].plate_id;
+                        db.all(`SELECT
+                                  plate_id
+                                FROM
+                                  plates
+                                WHERE
+                                  plate_number = '${plateNumber}'`,
+                                  [], (err, rows) => {
+                                  if (err) {
+                                    throw err;
+                                  }
+                                  let plate_id = rows[0].plate_id;
 
-          db.run(`UPDATE visits
-                  SET plate_id = '${newPlateId}'
-                  WHERE visit_id = '${visitId}'`, 
-          [], function(err) {
-          if (err) {
-            return console.error(err.message);
-          }
-          console.log(`Row(s) updated: ${this.changes}`);
-          });
+                                  db.run(`UPDATE visits
+                                          SET plate_id = '${plate_id}'
+                                          WHERE visit_id = '${visitId}'`, 
+                                  [], function(err) {
+                                  if (err) {
+                                    return console.error(err.message);
+                                  }
+                                  console.log(`Row(s) updated: ${this.changes} with a new plate number.`);
+                                  });
+                                  });
+                                })
+        }
       })
 }
 

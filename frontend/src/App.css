@@ -126,7 +126,16 @@ html, body {
 
 .focusedScanTextArea > h2 {
   font-size: 1.3em;
+  margin-top: 0 !important;
   margin-bottom: 0 !important;
+}
+
+.focusedScanTextArea > .on {
+ display:block !important;
+}
+
+.focusedScanTextArea > .off {
+  display:none !important;
 }
 
 .past {
