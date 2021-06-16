@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Segment, Button } from 'semantic-ui-react'
-import sampleLP from '../../../demo/sampleLP.jpg'
+import sampleLP from '../../../demo/Image-Coming-Soon.jpg'
 
 
 function ScanList(props) {

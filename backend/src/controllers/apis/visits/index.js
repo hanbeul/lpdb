@@ -8,5 +8,6 @@ router.get('/', visitService.getVisits)
       .get('/:id', visitService.getTotalVisits)
       .post('/', visitService.postVisit)
       .put('/:id', visitService.updateVisit)
+      .delete('/:id', visitService.deleteVisit)
 
 module.exports = router;

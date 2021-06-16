@@ -33,9 +33,16 @@ function updateVisit(req, res) {
   res.send(200);
 }
 
+function deleteVisit(req, res) {
+  let visitId = req.params.id;
+  db.deleteVisit(visitId);
+  res.send(200);
+}
+
 module.exports = {
   getVisits : getVisits,
   postVisit: postVisit,
   getTotalVisits: getTotalVisits,
-  updateVisit: updateVisit
+  updateVisit: updateVisit,
+  deleteVisit: deleteVisit
 };

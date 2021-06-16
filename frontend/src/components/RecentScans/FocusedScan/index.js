@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import sampleLP from '../../../demo/sampleLP.jpg'
-import { Button, Header, Form } from 'semantic-ui-react'
+import sampleLP from '../../../demo/Image-Coming-Soon.jpg'
+import { Button, Header, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
 
 function FocusedScan(props) {
@@ -8,6 +8,7 @@ function FocusedScan(props) {
     const [totalVisit, setTotalVisit] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [editData, setEditData] = useState("");
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         setFocus(props.focus);
@@ -15,7 +16,6 @@ function FocusedScan(props) {
 
     useEffect(async () => {
         setFocus(props.focus);
-
         const res = await axios(
             'http://localhost:9000/api/visits/' + props.focus.plate_id
         )
@@ -57,13 +57,15 @@ function FocusedScan(props) {
         setEditData(e.target.value);
     }
 
-    //Commenting below out for now; I will come back to implementing
-    //refreshing the focus update when plate number is edited
-    //when API refactor occurs to make smaller, incremental GET requests
-    //for the data. As of now, I cannot reasonably add this feature. 
+
     const updateReq = async () => {
         await axios.put('http://localhost:9000/api/visits/' + focus.visit_id, {plate_number: editData})
         setEditMode(false);
+    }
+
+    const deleteVisit = async () => {
+        await axios.delete('http://localhost:9000/api/visits/' + focus.visit_id)
+        setOpen(false)
     }
 
     return (
@@ -88,7 +90,34 @@ function FocusedScan(props) {
             <div className="focusedScanTextArea">
                 <Header as="h2">Total Visits: &nbsp; {totalVisit[0] ? totalVisit[0]['COUNT(*)'] : ""}</Header>
             </div>
-            <Button size="large"color="red"onClick={() => editVisit('MRSNOOPY')}>Delete</Button>
+            {/* <Button size="large"color="red"onClick={() => editVisit('MRSNOOPY')}>Delete</Button> */}
+            <Modal
+                basic
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                open={open}
+                size='small'
+                trigger={<Button color="red">Delete</Button>}
+                >
+                <Header icon>
+                    <Icon name='trash' />
+                    Delete This Scan?
+                </Header>
+                <Modal.Content>
+                    <p>
+                    Delete the record of scan ID {focus.visit_id}?
+                    THIS OPERATION IS IRREVERSIBLE.
+                    </p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button basic color='red' inverted onClick={() => setOpen(false)}>
+                    <Icon name='remove' /> No
+                    </Button>
+                    <Button color='green' inverted onClick={() => deleteVisit()}>
+                    <Icon name='checkmark' /> Yes
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         </div>
     )
 }
