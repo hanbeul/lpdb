@@ -11,6 +11,25 @@ import Footer from './components/Footer'
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:9000", {
+  transports: ['websocket'],
+  upgrade: false,
+});
+
+socket.on("connect", () => {
+  console.log("Connected!");
+  socket.emit("hello", "world");
+});
+
+socket.on("hello", msg => {
+  console.log(msg);
+})
+
+socket.on("disconnect", () => {
+  console.log("Disconnected!");
+})
 
 function App() {
   return (

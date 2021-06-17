@@ -16,6 +16,7 @@ function RecentScans() {
         const res = await axios(
             'http://localhost:9000/api/visits',
         );
+        if (res.data.length === 0) return;
         setVisits(res.data);
 
         let lastIndex = res.data.length - 1; //this part gets the newest scan, assuming newest scan will be the last object in the JSON.
