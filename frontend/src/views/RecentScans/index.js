@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Header } from 'semantic-ui-react'
+import { Header, Pagination } from 'semantic-ui-react'
 import FocusedScan from '../../components/RecentScans/FocusedScan'
 import ScanList from '../../components/RecentScans/ScanList'
 import axios from 'axios';
@@ -117,15 +117,33 @@ function RecentScans() {
                 <FocusedScan focus={focus}/>
             </div>
             <div className="pastTitle">
-                <div id="leftArrow" className="leftArrow off noselect" onClick={handleLeftArrow}>&lt;</div>
+                {/* <div id="leftArrow" className="leftArrow off noselect" onClick={handleLeftArrow}>&lt;</div>
                 <Header>Scans #: {startIndex}-{endIndex}</Header>
-                <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div>
+                <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div> */}
+                  <Pagination
+                    boundaryRange={0}
+                    defaultActivePage={1}
+                    ellipsisItem={null}
+                    firstItem={null}
+                    lastItem={null}
+                    siblingRange={1}
+                    totalPages={10}
+                />
             </div>
             <div className="past">
                 <div className="pastTitleLgMedia">
-                    <div id="leftArrow" className="leftArrow off noselect " onClick={handleLeftArrow}>&lt;</div>
+                    {/* <div id="leftArrow" className="leftArrow off noselect " onClick={handleLeftArrow}>&lt;</div>
                     <Header>Scans #: {startIndex}-{endIndex}</Header>
-                    <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div>
+                    <div id="rightArrow" className="rightArrow noselect" onClick={handleRightArrow}>&gt;</div> */}
+                      <Pagination
+                        boundaryRange={0}
+                        defaultActivePage={1}
+                        ellipsisItem={null}
+                        firstItem={null}
+                        lastItem={null}
+                        siblingRange={1}
+                        totalPages={10}
+                    />
                 </div>
                 <ScanList focus={focus} handleFocusChange={handleFocusChange} currentPagesVisits={currentPagesVisits}/>
             </div>
