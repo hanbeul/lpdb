@@ -210,11 +210,11 @@ module.exports.updateVisit = (visitId, plateNumber) => {
 }
 
 //DELETE (DELETE)
-module.exports.delete = () => {
-  let id = 1;
+module.exports.deleteVisit = (visitId) => {
+  console.log(visitId)
   let sql = `DELETE FROM visits 
-              WHERE rowid = ?`
-  db.run(sql, id, function(err) {
+              WHERE visit_id = '${visitId}'`
+  db.run(sql, [], function(err) {
     if (err) {
       return console.error(err.message);
     }
@@ -222,12 +222,17 @@ module.exports.delete = () => {
   });
 }
 
-module.exports.close = () => {
-    db.close((err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Close the database connection.');
-  });
-}
+
+//Looks like the concensus on Google is that there really is no
+//reason to close the DB ever... Just let it's process die with the app,
+//when the app kills its process. I'll leave the code here in case I need it
+//though. 
+// module.exports.close = () => {
+//     db.close((err) => {
+//     if (err) {
+//       return console.error(err.message);
+//     }
+//     console.log('Close the database connection.');
+//   });
+// }
 
