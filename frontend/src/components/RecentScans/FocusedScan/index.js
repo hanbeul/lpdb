@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function FocusedScan(props) {
     const [focus, setFocus] = useState([]);
-    const [totalVisit, setTotalVisit] = useState([]);
+    const [totalVisit, setTotalVisit] = useState([]);           
     const [editMode, setEditMode] = useState(false);
     const [editData, setEditData] = useState("");
     const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ function FocusedScan(props) {
     useEffect(async () => {
         setFocus(props.focus);
         const res = await axios(
-            'http://localhost:9000/api/visits/' + props.focus.plate_id
+            'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
         )
         setTotalVisit(res.data); 
     },[props.focus]);

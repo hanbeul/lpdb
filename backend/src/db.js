@@ -53,6 +53,59 @@ module.exports.getVisits = (result) => {
   });
 }
 
+module.exports.getSingleVisit = (visitId, result) => {
+  db.all(`SELECT
+            visit_id,
+            visit_date,
+            visits.plate_id,
+            plate_number
+          FROM
+            visits
+          INNER JOIN plates
+            ON plates.plate_id = visits.plate_id
+          WHERE visit_id = '${visitId}'`,
+          [], (err, rows) => {
+            if (err) {
+              throw err;``
+            }
+            result(null, rows);
+          })
+}
+
+module.exports.getPageVisits = (pageNumber, result) => {
+  let start = Number((pageNumber - 1) * 10);
+  let visitsPerPage = 10; 
+
+  console.log('query is about to begin')
+  db.all(`SELECT
+            visit_id,
+            visit_date
+          FROM
+            visits
+          ORDER BY
+            visit_id DESC
+          LIMIT '${visitsPerPage}' OFFSET '${start}'`,
+          [], (err, rows) => {
+            if (err) {
+              throw err;
+            }
+            result(null, rows);
+          })
+}
+
+module.exports.getPageCount = (result) => {
+  db.all(`SELECT COUNT(*)
+          FROM visits`,
+          [], (err, rows) => {
+            if (err) {
+              throw err;
+            }
+            console.log(rows)
+            let pageCount = Math.ceil(rows / 10);
+            result(null, rows);
+          })
+}
+
 module.exports.getTotalVisits = (plateId, result) => {
   db.all(`SELECT COUNT(*)
           FROM visits

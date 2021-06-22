@@ -10,12 +10,36 @@ function getVisits(req, res) {
   });
 }
 
+function getSingleVisit(req, res) {
+  visitId = req.params.id;
+  db.getSingleVisit(visitId, (err, result) => {
+    if (err) throw err; 
+    res.send(result);
+  })
+}
+
+function getPageVisits(req,res) {
+  pageNumber = req.params.id;
+  db.getPageVisits(pageNumber, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  })
+}
+
 function getTotalVisits(req, res) {
   plateId = req.params.id;
   db.getTotalVisits(plateId, (err, result) => {
     if (err) throw err;
     res.send(result);
   })
+}
+
+function getPageCount(req, res) {
+  console.log('pagpeCount is starting')
+  db.getPageCount((err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
 }
 
 function postVisit(req, res) {
@@ -44,5 +68,8 @@ module.exports = {
   postVisit: postVisit,
   getTotalVisits: getTotalVisits,
   updateVisit: updateVisit,
-  deleteVisit: deleteVisit
+  deleteVisit: deleteVisit,
+  getSingleVisit: getSingleVisit,
+  getPageVisits: getPageVisits,
+  getPageCount: getPageCount
 };

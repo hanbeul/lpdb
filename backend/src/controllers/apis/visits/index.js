@@ -5,7 +5,10 @@ const
 let router = express.Router();
 
 router.get('/', visitService.getVisits)
-      .get('/:id', visitService.getTotalVisits)
+      .get('/:id', visitService.getSingleVisit)
+      .get('/page/:id', visitService.getPageVisits)
+      .get('/countvisits/:id', visitService.getTotalVisits)
+      .get('/pagecount', visitService.getPageCount)
       .post('/', visitService.postVisit)
       .put('/:id', visitService.updateVisit)
       .delete('/:id', visitService.deleteVisit)
