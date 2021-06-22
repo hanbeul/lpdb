@@ -35,7 +35,6 @@ function getTotalVisits(req, res) {
 }
 
 function getPageCount(req, res) {
-  console.log('pagpeCount is starting')
   db.getPageCount((err, result) => {
     if (err) throw err;
     res.send(result);

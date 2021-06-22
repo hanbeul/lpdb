@@ -100,9 +100,11 @@ module.exports.getPageCount = (result) => {
             if (err) {
               throw err;
             }
-            console.log(rows)
-            let pageCount = Math.ceil(rows / 10);
-            result(null, rows);
+            let count = Math.ceil(rows[0]['COUNT(*)'] / 10);
+            let pageCount = {
+              total: count
+            } 
+            result(null, pageCount);
           })
 }
 
