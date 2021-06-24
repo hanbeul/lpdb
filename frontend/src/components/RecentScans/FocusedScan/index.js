@@ -10,16 +10,22 @@ function FocusedScan(props) {
     const [editData, setEditData] = useState("");
     const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        setFocus(props.focus);
+    useEffect(async() => {
+        const res = await axios(
+            'http://localhost:9000/api/visits/' + props.focus.visit_id
+        )
+        setFocus(res.data)
     },[])
 
     useEffect(async () => {
-        setFocus(props.focus);
         const res = await axios(
+            'http://localhost:9000/api/visits/' + props.focus.visit_id
+        )
+        setFocus(res.data)
+        const res2 = await axios(
             'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
         )
-        setTotalVisit(res.data); 
+        setTotalVisit(res2.data); 
     },[props.focus]);
 
     useEffect(() => {
@@ -59,25 +65,27 @@ function FocusedScan(props) {
 
 
     const updateReq = async () => {
-        await axios.put('http://localhost:9000/api/visits/' + focus.visit_id, {plate_number: editData})
+        await axios.put('http://localhost:9000/api/visits/' + focus[0]['visit_id'], {plate_number: editData})
         setEditMode(false);
+        props.handleFocusEdit();
     }
 
     const deleteVisit = async () => {
-        await axios.delete('http://localhost:9000/api/visits/' + focus.visit_id)
-        setOpen(false)
+        await axios.delete('http://localhost:9000/api/visits/' + focus[0]['visit_id'])
+        setOpen(false);
+        props.handleVisitDelete();
     }
 
     return (
         <div className="focusedScan">
-            <Header as="h1">Scan # {focus.visit_id}</Header>
+            <Header as="h1">Scan # {focus[0] ? focus[0]['visit_id'] : ""}</Header>
             <img src={sampleLP} />
             <div className="focusedScanTextArea">
                 <Header as="h2"> Plate #: </Header> &nbsp;&nbsp;&nbsp;
-                <Header as="h2" className="noEditMode on">{focus.plate_number} </Header> &nbsp;&nbsp;&nbsp;
+                <Header as="h2" className="noEditMode on">{focus[0] ? focus[0]['plate_number'] : ""} </Header> &nbsp;&nbsp;&nbsp;
                 <Form className="editMode off">
                     <Form.Field className="editMode off">
-                        <input placeholder={focus.plate_number} onChange={newPlateId} />
+                        <input placeholder={focus[0] ? focus[0]['plate_number'] : ""} onChange={newPlateId} />
                     </Form.Field>
                 </Form>
                 <Button size="mini" className="noEditMode on" onClick={() => editVisit()}>Edit</Button>
@@ -85,12 +93,11 @@ function FocusedScan(props) {
                 <Button color="red" size="mini" className="editMode off" onClick={() => editVisit()}>Cancel</Button>
             </div>
             <div className="focusedScanTextArea">
-                <Header as="h2">Date of Visit: {focus.visit_date ? new Date(focus.visit_date).toLocaleString() : ""}</Header>
+                <Header as="h2">Date of Visit: {focus[0] ? new Date(focus[0]['visit_date']).toLocaleString() : ""}</Header>
             </div>
             <div className="focusedScanTextArea">
                 <Header as="h2">Total Visits: &nbsp; {totalVisit[0] ? totalVisit[0]['COUNT(*)'] : ""}</Header>
             </div>
-            {/* <Button size="large"color="red"onClick={() => editVisit('MRSNOOPY')}>Delete</Button> */}
             <Modal
                 basic
                 onClose={() => setOpen(false)}

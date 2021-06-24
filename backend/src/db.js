@@ -75,11 +75,10 @@ module.exports.getSingleVisit = (visitId, result) => {
 module.exports.getPageVisits = (pageNumber, result) => {
   let start = Number((pageNumber - 1) * 10);
   let visitsPerPage = 10; 
-
-  console.log('query is about to begin')
   db.all(`SELECT
             visit_id,
-            visit_date
+            visit_date,
+            plate_id
           FROM
             visits
           ORDER BY

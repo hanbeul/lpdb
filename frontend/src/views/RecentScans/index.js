@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Header, Pagination } from 'semantic-ui-react'
+import { Pagination } from 'semantic-ui-react'
 import FocusedScan from '../../components/RecentScans/FocusedScan'
 import ScanList from '../../components/RecentScans/ScanList'
 import axios from 'axios';
@@ -12,7 +12,7 @@ function RecentScans() {
 
     useEffect(async () => {
         const res = await axios(
-            'http://localhost:9000/api/visits/page/' + currentPage,
+            'http://localhost:9000/api/visits/page/' + currentPage
         );
         if (res.data.length === 0) return;
         setCurrentPagesVisits(res.data);
@@ -47,17 +47,23 @@ function RecentScans() {
         } 
     };
 
-    //Commenting below out for now; I will come back to implementing
-    //refreshing the focus update when plate number is edited
-    //when API refactor occurs to make smaller, incremental GET requests
-    //for the data. As of now, I cannot reasonably add this feature. 
-    // const handleFocusEdit = async (updateFocus) => {
-    //     const res = await axios(
-    //         'http://localhost:9000/api/visits',
-    //     );
-    //     setVisits(res.data);
-    //     updateFocus()
-    // }
+
+    const handleFocusEdit = async () => {
+        const res = await axios(
+            'http://localhost:9000/api/visits/' + focus.visit_id
+        );
+        console.log(res.data[0]);
+        setFocus(res.data[0]);
+    }
+
+    const handleVisitDelete = async () => {
+        const res = await axios(
+            'http://localhost:9000/api/visits/page/' + currentPage
+        );
+        if (res.data.length === 0) return;
+        setCurrentPagesVisits(res.data);
+        setFocus(res.data[0]);
+    }
 
     const handlePaginationChange = (e, {activePage}) => {
         let targetValue = Object.values({activePage})
@@ -67,7 +73,11 @@ function RecentScans() {
     return (
         <div className="recentScansPage">
             <div className="recent">
-                <FocusedScan focus={focus}/>
+                <FocusedScan 
+                    focus={focus} 
+                    handleFocusEdit={handleFocusEdit}
+                    handleVisitDelete = {handleVisitDelete} 
+                />
             </div>
             <div className="pastTitle">
                 <Pagination
@@ -94,7 +104,11 @@ function RecentScans() {
                         totalPages={totalPages.total}
                     />
                 </div>
-                <ScanList focus={focus} handleFocusChange={handleFocusChange} currentPagesVisits={currentPagesVisits}/>
+                <ScanList 
+                    focus={focus} 
+                    handleFocusChange={handleFocusChange} 
+                    currentPagesVisits={currentPagesVisits}
+                />
             </div>
         </div>
         
