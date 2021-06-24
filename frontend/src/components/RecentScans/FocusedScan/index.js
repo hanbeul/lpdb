@@ -68,6 +68,10 @@ function FocusedScan(props) {
         await axios.put('http://localhost:9000/api/visits/' + focus[0]['visit_id'], {plate_number: editData})
         setEditMode(false);
         props.handleFocusEdit();
+        const res = await axios(
+            'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
+        )
+        setTotalVisit(res.data); 
     }
 
     const deleteVisit = async () => {
