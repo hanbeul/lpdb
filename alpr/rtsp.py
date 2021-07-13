@@ -6,7 +6,7 @@ import os
 import ultimateAlprSdk
 import json
 import requests
-import time
+from datetime import datetime, timedelta
 
 RTSP_PW = os.environ.get("RTSP_PW")
 RTSP_URL = "rtsp://lpdb:" + RTSP_PW + "@192.168.1.66/live"
@@ -58,6 +58,12 @@ recent_visits = {}
 last_plate = ""
 last_plate_count = 0
 
+def add_plate(plate):
+  print("Adding plate!", flush=True)
+  t = datetime.today()
+  requests.post("http://backend:9000/api/visits", data = {'plate': plate, 'timestamp': t})
+  recent_visits[plate] = t
+
 while(1):
   ret, frame = vcap.read()
   #frame = cv2.Canny(frame,100,200)
@@ -93,11 +99,11 @@ while(1):
       last_plate_count = 0
     last_plate = result["plates"][0]["text"]
 
-    if last_plate_count >= 30 and last_plate not in recent_visits.keys():
-      print("Adding plate!", flush=True)
-      t = time.time()
-      requests.post("http://backend:9000/api/visits", data = {'plate': last_plate, 'timestamp': t})
-      recent_visits[last_plate] = t
+    if last_plate_count >= 30:
+      if last_plate not in recent_visits.keys():
+        add_plate(last_plate)
+      elif (datetime.today() - recent_visits[last_plate]) > timedelta(minutes = 5):
+        add_plate(last_plate)
 
 
 
