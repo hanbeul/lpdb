@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const db = require('../../db')
+const io = require('../../socket').getIo();
+console.log(io);
 
 
 function getVisits(req, res) {
@@ -46,6 +48,7 @@ function postVisit(req, res) {
   const plate = req.body.plate;
   const timestamp = Date(req.body.timestamp)
   db.insertVisit(plate, timestamp);
+  io.emit("reload");
   res.send(200);
 }
 
