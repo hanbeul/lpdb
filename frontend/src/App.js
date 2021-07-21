@@ -25,7 +25,11 @@ socket.on("connect", () => {
 
 socket.on("hello", msg => {
   console.log(msg);
-})
+});
+
+socket.on("reload", msg => {
+  window.location.reload();
+});
 
 socket.on("disconnect", () => {
   console.log("Disconnected!");
