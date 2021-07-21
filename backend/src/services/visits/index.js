@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const db = require('../../db')
-
+const multer = require('multer');
 
 function getVisits(req, res) {
   db.getVisits((err, result) => {
@@ -62,6 +62,22 @@ function deleteVisit(req, res) {
   res.send(200);
 }
 
+//designate multer upload location and filename scheme
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './db/images') //for some reason in docker container ./ is /app, not the diretory this code is in.
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({ storage: storage })
+
+function postImage(req, res, next) {
+  console.log(JSON.stringify(req.file))
+  res.send(200);
+}
+
 module.exports = {
   getVisits : getVisits,
   postVisit: postVisit,
@@ -70,5 +86,7 @@ module.exports = {
   deleteVisit: deleteVisit,
   getSingleVisit: getSingleVisit,
   getPageVisits: getPageVisits,
-  getPageCount: getPageCount
+  getPageCount: getPageCount,
+  postImage: postImage,
+  upload: upload
 };

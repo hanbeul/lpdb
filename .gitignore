@@ -3,7 +3,3 @@ node_modules/
 test.js
 .env
 test/
-
-chinook.db
-test2.db
-test.db

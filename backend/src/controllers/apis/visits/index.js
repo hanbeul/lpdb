@@ -12,5 +12,6 @@ router.get('/', visitService.getVisits)
       .post('/', visitService.postVisit)
       .put('/:id', visitService.updateVisit)
       .delete('/:id', visitService.deleteVisit)
+      .post('/image', visitService.upload.single('image'), visitService.postImage)
 
 module.exports = router;
