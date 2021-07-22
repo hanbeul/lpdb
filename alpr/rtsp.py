@@ -7,6 +7,8 @@ import ultimateAlprSdk
 import json
 import requests
 from datetime import datetime, timedelta
+import base64
+from io import BytesIO
 
 RTSP_PW = os.environ.get("RTSP_PW")
 RTSP_URL = "rtsp://lpdb:" + RTSP_PW + "@192.168.1.66/live"
@@ -61,7 +63,19 @@ last_plate_count = 0
 def add_plate(plate):
   print("Adding plate!", flush=True)
   t = datetime.today()
-  requests.post("http://backend:9000/api/visits", data = {'plate': plate, 'timestamp': t})
+
+  # Resize image
+  base_width = 200
+  wpercent = (base_width/float(image.size[0]))
+  hsize = int((float(image.size[1])*float(wpercent)))
+  scaled_image = image.resize((base_width, hsize), Image.ANTIALIAS)
+
+  # Encode image to b64
+  buffered = BytesIO()
+  scaled_image.save(buffered, format="PNG")
+  b64_image = base64.b64encode(buffered.getvalue())
+
+  requests.post("http://backend:9000/api/visits", data = {'plate': plate, 'timestamp': t, 'image': b64_image})
   recent_visits[plate] = t
 
 while(1):
