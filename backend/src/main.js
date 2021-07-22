@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const httpServer = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,6 +10,8 @@ const port = 9000;
 
 let routes = require('./routes');
 let db = require('./db.js');
+
+app.use(express.static('static'))
 
 //Middleware
 app.use(bodyParser.json());

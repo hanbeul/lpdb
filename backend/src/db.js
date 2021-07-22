@@ -16,6 +16,7 @@ db.run(`CREATE TABLE IF NOT EXISTS visits (
   visit_id integer PRIMARY KEY,
   visit_date text,
   plate_id text NOT NULL,
+  visit_image_path text,
   FOREIGN KEY (plate_id)
     REFERENCES plates (plate_id)
 )`)
@@ -40,7 +41,8 @@ module.exports.getVisits = (result) => {
             visit_id,
             visit_date,
             visits.plate_id,
-            plate_number
+            plate_number,
+            visit_image_path
           FROM
             visits
           INNER JOIN plates
@@ -153,7 +155,7 @@ module.exports.getPlateId = () => {
 }
 
 //CREATE (INSERT)
-module.exports.insertVisit = (plate, timestamp) => {
+module.exports.insertVisit = (plate, timestamp, image_path) => {
   db.serialize(() => {
     db.run(`INSERT INTO plates(plate_number)
             VALUES(?)`,
@@ -177,9 +179,9 @@ module.exports.insertVisit = (plate, timestamp) => {
       }
       let plate_id = rows[0].plate_id;
 
-      db.run(`INSERT INTO visits(plate_id, visit_date) 
-              VALUES(?, ?)`, 
-              [plate_id, Date(timestamp)], 
+      db.run(`INSERT INTO visits(plate_id, visit_date, visit_image_path) 
+              VALUES(?, ?, ?)`, 
+              [plate_id, Date(timestamp), image_path], 
             function(err) {
               if (err) {
                 return console.log(err.message);

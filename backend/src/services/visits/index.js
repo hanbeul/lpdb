@@ -47,8 +47,20 @@ function getPageCount(req, res) {
 function postVisit(req, res) {
   console.log(req.body);
   const plate = req.body.plate;
-  const timestamp = Date(req.body.timestamp)
-  db.insertVisit(plate, timestamp);
+  const timestamp = Date(req.body.timestamp);
+  const image_path = `${req.body.plate}-${req.body.timestamp}.png`
+  db.insertVisit(plate, timestamp, image_path);
+
+  let buff = new Buffer(req.body.image, 'base64');
+
+  fs.writeFile(`./static/images/${image_path}`, buff,  "binary",function(err) {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log("The file was saved!");
+    }
+});
+
   io.emit("reload");
   res.send(200);
 }

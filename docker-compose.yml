@@ -12,6 +12,7 @@ services:
     volumes:
       - "./backend/src:/app/src"
       - "./backend/db:/app/db"
+      - "./backend/static:/app/static"
 
   frontend:
     build: ./frontend
