@@ -60,7 +60,8 @@ module.exports.getSingleVisit = (visitId, result) => {
             visit_id,
             visit_date,
             visits.plate_id,
-            plate_number
+            plate_number,
+            visit_image_path
           FROM
             visits
           INNER JOIN plates
@@ -80,7 +81,8 @@ module.exports.getPageVisits = (pageNumber, result) => {
   db.all(`SELECT
             visit_id,
             visit_date,
-            plate_id
+            plate_id,
+            visit_image_path
           FROM
             visits
           ORDER BY

@@ -21,7 +21,7 @@ function ScanList(props) {
                 return (
                     <Segment className="scan" id={visit.visit_id == focus.visit_id ? "focused" : ""}>
                         <div>
-                            <img src={sampleLP} className="scanImg"></img>
+                            <img src={visit ? `http://localhost:9000/images/${visit.visit_image_path}`: ""} className="scanImg"/>
                         </div>
                         <div>
                             <p>{visit.plate_number}</p>

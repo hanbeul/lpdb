@@ -83,7 +83,7 @@ function FocusedScan(props) {
     return (
         <div className="focusedScan">
             <Header as="h1">Scan # {focus[0] ? focus[0]['visit_id'] : ""}</Header>
-            <img src={sampleLP} />
+            <img src={focus[0] ? `http://localhost:9000/images/${focus[0]['visit_image_path']}`: ""} />
             <div className="focusedScanTextArea">
                 <Header as="h2"> Plate #: </Header> &nbsp;&nbsp;&nbsp;
                 <Header as="h2" className="noEditMode on">{focus[0] ? focus[0]['plate_number'] : ""} </Header> &nbsp;&nbsp;&nbsp;
