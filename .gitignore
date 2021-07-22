@@ -4,3 +4,4 @@ test.js
 .env
 test/
 backend/db
+backend/static/images
