@@ -65,7 +65,7 @@ def add_plate(plate):
   t = datetime.today()
 
   # Resize image
-  base_width = 200
+  base_width = 1000
   wpercent = (base_width/float(image.size[0]))
   hsize = int((float(image.size[1])*float(wpercent)))
   scaled_image = image.resize((base_width, hsize), Image.ANTIALIAS)
