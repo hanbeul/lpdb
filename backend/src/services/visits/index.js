@@ -47,8 +47,9 @@ function getPageCount(req, res) {
 function postVisit(req, res) {
   console.log(req.body);
   const plate = req.body.plate;
-  const timestamp = Date(req.body.timestamp);
-  const image_path = `${req.body.plate}-${req.body.timestamp}.png`
+  const timestamp = new Date();
+  console.log(timestamp);
+  const image_path = `${req.body.plate}-${timestamp.toString()}.png`
   db.insertVisit(plate, timestamp, image_path);
 
   let buff = new Buffer(req.body.image, 'base64');
