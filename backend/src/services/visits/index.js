@@ -14,7 +14,7 @@ function getVisits(req, res) {
 }
 
 function getSingleVisit(req, res) {
-  visitId = req.params.id;
+  let visitId = req.params.id;
   db.getSingleVisit(visitId, (err, result) => {
     if (err) throw err; 
     res.send(result);
@@ -22,7 +22,7 @@ function getSingleVisit(req, res) {
 }
 
 function getPageVisits(req,res) {
-  pageNumber = req.params.id;
+  let pageNumber = req.params.id;
   db.getPageVisits(pageNumber, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -30,7 +30,7 @@ function getPageVisits(req,res) {
 }
 
 function getTotalVisits(req, res) {
-  plateId = req.params.id;
+  let plateId = req.params.id;
   db.getTotalVisits(plateId, (err, result) => {
     if (err) throw err;
     res.send(result);
