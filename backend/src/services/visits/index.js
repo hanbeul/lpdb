@@ -3,8 +3,6 @@ const path = require('path');
 const db = require('../../db')
 const multer = require('multer');
 const io = require('../../socket').getIo();
-console.log(io);
-
 
 function getVisits(req, res) {
   db.getVisits((err, result) => {
@@ -14,7 +12,7 @@ function getVisits(req, res) {
 }
 
 function getSingleVisit(req, res) {
-  visitId = req.params.id;
+  let visitId = req.params.id;
   db.getSingleVisit(visitId, (err, result) => {
     if (err) throw err; 
     res.send(result);
@@ -22,7 +20,7 @@ function getSingleVisit(req, res) {
 }
 
 function getPageVisits(req,res) {
-  pageNumber = req.params.id;
+  let pageNumber = req.params.id;
   db.getPageVisits(pageNumber, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -30,7 +28,7 @@ function getPageVisits(req,res) {
 }
 
 function getTotalVisits(req, res) {
-  plateId = req.params.id;
+  let plateId = req.params.id;
   db.getTotalVisits(plateId, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -45,15 +43,12 @@ function getPageCount(req, res) {
 }
 
 function postVisit(req, res) {
-  console.log(req.body);
   const plate = req.body.plate;
   const timestamp = new Date();
-  console.log(timestamp);
   const image_path = `${req.body.plate}-${timestamp.toString()}.png`
   db.insertVisit(plate, timestamp, image_path);
-
   let buff = new Buffer(req.body.image, 'base64');
-
+  console.log(`received POST request for ${plate}`)
   fs.writeFile(`./static/images/${image_path}`, buff,  "binary",function(err) {
     if(err) {
         console.log(err);
@@ -63,7 +58,7 @@ function postVisit(req, res) {
 });
 
   io.emit("reload");
-  res.send(200);
+  res.sendStatus(200);
 }
 
 function updateVisit(req, res) {
@@ -91,7 +86,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 function postImage(req, res, next) {
-  console.log(JSON.stringify(req.file))
   res.send(200);
 }
 

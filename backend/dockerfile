@@ -1,9 +1,26 @@
-FROM node:11
+# FROM node:11
+# WORKDIR /app
+# COPY package.json .
+# COPY package-lock.json .
+# RUN npm -g install nodemon
+# RUN npm install
+# COPY . .
+
+# ENTRYPOINT ["nodemon", "src/main.js"]
+
+
+FROM node:11 as base
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
+
+FROM base as test
+RUN npm install
+COPY . .
+ENTRYPOINT ["npm", "test"]
+
+FROM base as dev
 RUN npm -g install nodemon
 RUN npm install
 COPY . .
-
 ENTRYPOINT ["nodemon", "src/main.js"]

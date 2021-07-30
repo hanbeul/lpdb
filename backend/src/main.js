@@ -31,3 +31,4 @@ httpServer.listen(port, function() {
   console.log('Express server listening on - http://localhost:' + port);
 });
 
+module.exports = app
