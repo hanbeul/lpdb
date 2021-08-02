@@ -82,10 +82,10 @@ function FocusedScan(props) {
 
     return (
         <div className="focusedScan">
-            <Header as="h1">Scan # {focus[0] ? focus[0]['visit_id'] : ""}</Header>
+            {/* <Header as="h1">Scan # {focus[0] ? focus[0]['visit_id'] : ""}</Header> */}
             <img src={focus[0] ? `http://localhost:9000/images/${focus[0]['visit_image_path']}`: ""} />
             <div className="focusedScanTextArea">
-                <Header as="h2"> Plate #: </Header> &nbsp;&nbsp;&nbsp;
+                {/* <Header as="h2"> Plate #: </Header> &nbsp;&nbsp;&nbsp; */}
                 <Header as="h2" className="noEditMode on">{focus[0] ? focus[0]['plate_number'] : ""} </Header> &nbsp;&nbsp;&nbsp;
                 <Form className="editMode off">
                     <Form.Field className="editMode off">
@@ -97,11 +97,21 @@ function FocusedScan(props) {
                 <Button color="red" size="mini" className="editMode off" onClick={() => editVisit()}>Cancel</Button>
             </div>
             <div className="focusedScanTextArea">
-                <Header as="h2">Date of Visit: {focus[0] ? new Date(focus[0]['visit_date']).toLocaleString() : ""}</Header>
+                <Header as="h2">{focus[0] ? new Date(focus[0]['visit_date']).toLocaleString() : ""}</Header>
             </div>
             <div className="focusedScanTextArea">
-                <Header as="h2">Total Visits: &nbsp; {totalVisit[0] ? totalVisit[0]['COUNT(*)'] : ""}</Header>
+                <Header as="h2">Free Wash Check-In: &nbsp; {totalVisit[0] ? totalVisit[0]['COUNT(*)'] : ""}</Header>
             </div>
+
+            <div className="checkBoxDiv">
+                <div class="checkBox-unchecked">
+                    <div class="checkMark"></div>
+                </div>
+                <div class="checkBox-checked">
+                    <div class="checkMark"></div>
+                </div>
+            </div>
+
             <Modal
                 basic
                 onClose={() => setOpen(false)}

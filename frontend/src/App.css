@@ -3,7 +3,6 @@ html, body {
   margin: 0;
 }
 
-
 #root, #root > div {
   display:flex;
   flex-direction:column;
@@ -125,7 +124,7 @@ html, body {
 }
 
 .focusedScanTextArea > h2 {
-  font-size: 1.3em;
+  font-size: 1.5em !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
@@ -223,6 +222,53 @@ html, body {
   display:none;
 }
 
+/* FocusedScan Checkbox Styling */
+
+
+.checkBoxDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkBox-unchecked {
+  margin: 3px;
+  position:relative;  
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  height: 28px;
+  left: 0;
+  top: 0;
+  width: 28px;
+  box-sizing:content-box !important;
+}
+.checkBox-checked {
+  margin: 3px;
+  position:relative;  
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  height: 28px;
+  left: 0;
+  top: 0;
+  width: 28px;
+  box-sizing:content-box !important;
+}
+.checkMark {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 1;
+  position: absolute;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
 @media (min-width:768px) {
   .title {
     display:block;
@@ -288,6 +334,10 @@ html, body {
     font-size:3rem;
     margin-left: 1rem;
   }
+
+  .focusedScanTextArea > h2 {
+    font-size: 2em !important;
+  }
 }
 
 @media (min-width:1440px) {
@@ -300,7 +350,7 @@ html, body {
   }
 
   .focusedScanTextArea > p {
-    font-size: 2em;
+    font-size: 1.5em;
     margin: 0em;
   }
 
