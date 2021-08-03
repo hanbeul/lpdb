@@ -33,7 +33,23 @@ function getTotalVisits(req, res) {
   let plateId = req.params.id;
   db.getTotalVisits(plateId, (err, result) => {
     if (err) throw err;
-    res.send(result);
+    //Get the check-in counter using the last digit of TotalVisits
+    if (result[0]['COUNT(*)'] == 0) { //if TotalVisits is 0, check-in is 0. It shouldn't be 0, but still.
+      let checkInCount = {"checkInCount" : 0}
+      result.push(checkInCount)
+      res.send(result);
+    }
+    else if (result[0]['COUNT(*)'].toString().slice(-1) == 0) { //if TotalVisit's last digit is 0, then check-in is at 10.
+      let checkInCount = {"checkInCount" : 10}
+      result.push(checkInCount)
+      res.send(result);
+    }
+    else {
+      let checkInCount = {"checkInCount" :parseInt(result[0]['COUNT(*)'].toString().slice(-1))} //otherwise it's whatever the last digit is.
+      result.push(checkInCount)
+      res.send(result);
+    }
+
   })
 }
 

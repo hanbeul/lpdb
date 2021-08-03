@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import sampleLP from '../../../demo/Image-Coming-Soon.jpg'
 import { Button, Header, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
 
 function FocusedScan(props) {
     const [focus, setFocus] = useState([]);
-    const [totalVisit, setTotalVisit] = useState([]);           
+    const [totalVisit, setTotalVisit] = useState([]);
+    const [checkBoxes, setCheckBoxes] = useState([]);           
     const [editMode, setEditMode] = useState(false);
     const [editData, setEditData] = useState("");
     const [open, setOpen] = useState(false);
@@ -26,6 +26,20 @@ function FocusedScan(props) {
             'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
         )
         setTotalVisit(res2.data); 
+        const checkInCompletion = 10;
+        let checkInCount = res2.data[1]['checkInCount'];
+        let checkInProgress = [];
+        for (let i = 1; i <= checkInCompletion; i++) {
+            if (checkInCount >= i) {
+                let checkBox = {"checked_in": true}
+                checkInProgress.push(checkBox);
+            }  
+            else {
+                let checkBox = {"checked_in": false}
+                checkInProgress.push(checkBox);
+            };
+        }
+        setCheckBoxes(checkInProgress);
     },[props.focus]);
 
     useEffect(() => {
@@ -100,16 +114,29 @@ function FocusedScan(props) {
                 <Header as="h2">{focus[0] ? new Date(focus[0]['visit_date']).toLocaleString() : ""}</Header>
             </div>
             <div className="focusedScanTextArea">
-                <Header as="h2">Free Wash Check-In: &nbsp; {totalVisit[0] ? totalVisit[0]['COUNT(*)'] : ""}</Header>
+                <Header as="h2">Free Wash Check-In: &nbsp; {totalVisit[0] ? totalVisit[1]['checkInCount'] : ""} / 10</Header>
             </div>
 
+
             <div className="checkBoxDiv">
-                <div class="checkBox-unchecked">
-                    <div class="checkMark"></div>
-                </div>
-                <div class="checkBox-checked">
-                    <div class="checkMark"></div>
-                </div>
+                {checkBoxes.map(checkBox => {
+                    if (checkBox.checked_in) {
+                        return(
+                        <div class="checkBox-checked">
+                            <div class="checkMark"></div>
+                        </div>)      
+                    }
+                    else {
+                        return(
+                        <div class="checkBox-unchecked">
+                            <div class="checkMark"></div>
+                        </div>           
+                        )
+                    }
+                })}
+            </div>
+            <div className="focusedScanTextArea">
+                <Header as="h2">FREE WASH AVAILABLE!!</Header>
             </div>
 
             <Modal
@@ -122,7 +149,7 @@ function FocusedScan(props) {
                 >
                 <Header icon>
                     <Icon name='trash' />
-                    Delete This Scan?
+                    Delete This Visit?
                 </Header>
                 <Modal.Content>
                     <p>
