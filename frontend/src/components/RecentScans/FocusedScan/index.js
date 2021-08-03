@@ -136,7 +136,6 @@ function FocusedScan(props) {
                 })}
             </div>
             <div className="focusedScanTextArea">
-                <Header as="h2">FREE WASH AVAILABLE!!</Header>
             </div>
 
             <Modal

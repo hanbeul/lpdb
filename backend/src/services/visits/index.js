@@ -49,7 +49,6 @@ function getTotalVisits(req, res) {
       result.push(checkInCount)
       res.send(result);
     }
-
   })
 }
 
