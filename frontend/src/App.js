@@ -5,9 +5,8 @@ import Nav from './components/Nav'
 import RecentScans from './views/RecentScans'
 import Dashboard from './views/Dashboard'
 import Page2 from './views/Page2'
-import Page3 from './views/Page3'
+import Plates from './views/Plates'
 import Visits from './views/Visits'
-import Footer from './components/Footer'
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -45,10 +44,9 @@ function App() {
             <Route path="/" exact component={RecentScans} />
             <Route path="/Dashboard" exact component={Dashboard} /> 
             <Route path="/page2" component={Page2} /> 
-            <Route path="/page3" component={Page3} /> 
+            <Route path="/plates" component={Plates} /> 
             <Route path="/visits" component={Visits} /> 
           </Switch>
-        {/* <Footer /> */}
       </Router>
     </div>
   );
