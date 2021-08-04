@@ -3,7 +3,7 @@ const path = require('path');
 const db = require('../../db')
 const multer = require('multer');
 const io = require('../../socket').getIo();
-console.log(io);
+// console.log(io);
 
 
 function getVisits(req, res) {

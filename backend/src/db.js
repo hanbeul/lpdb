@@ -33,7 +33,7 @@ db.run(`CREATE TABLE IF NOT EXISTS plates (
 
 
 
-//CRUD operations
+//CRUD operations for visits table
 
 //READ (SELECT)
 module.exports.getVisits = (result) => {
@@ -281,16 +281,19 @@ module.exports.deleteVisit = (visitId) => {
 }
 
 
-//Looks like the concensus on Google is that there really is no
-//reason to close the DB ever... Just let it's process die with the app,
-//when the app kills its process. I'll leave the code here in case I need it
-//though. 
-// module.exports.close = () => {
-//     db.close((err) => {
-//     if (err) {
-//       return console.error(err.message);
-//     }
-//     console.log('Close the database connection.');
-//   });
-// }
 
+
+//CRUD operations for the PLATES table
+
+module.exports.getPlates = (result) => {
+  db.all(`SELECT
+            plate_id,
+            plate_number
+          FROM
+            plates`, [], (err, rows) => {
+              if (err) {
+                throw err;
+              }
+              result(null, rows);
+            });
+}
