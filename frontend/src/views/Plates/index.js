@@ -1,8 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Icon, Menu, Table } from 'semantic-ui-react'
-
+import { Menu, Table, Pagination } from 'semantic-ui-react'
+import axios from 'axios'
 
 function Plates() {
+    const [platesOfCurrentPage, setPlatesOfCurrentPage] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState([]);
+
+    useEffect(async() => {
+        const res = await axios(
+            'http://localhost:9000/api/plates/page/'+ currentPage
+            )
+        setPlatesOfCurrentPage(res.data);
+        
+        const res2 = await axios(
+            'http://localhost:9000/api/plates/pagecount/total'
+        )
+        setTotalPages(res2.data)
+        }, [currentPage])
+
+    const handlePaginationChange = (e, {activePage}) => {
+        let targetValue = Object.values({activePage})
+        setCurrentPage(targetValue.toString());
+    }
+    
     return (
         <Table celled unstackable>
             <Table.Header>
@@ -14,37 +35,31 @@ function Plates() {
             </Table.Header>
         
             <Table.Body>
-            <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
+                {platesOfCurrentPage.map(plate => {
+                return(
+                <Table.Row>
+                    <Table.Cell>{plate.plate_id}</Table.Cell>
+                    <Table.Cell>{plate.plate_number}</Table.Cell>
+                    <Table.Cell>{}</Table.Cell>
+                </Table.Row>
+                )
+            })}
             </Table.Body>
         
             <Table.Footer>
             <Table.Row>
                 <Table.HeaderCell colSpan='3'>
                 <Menu floated='right' pagination>
-                    <Menu.Item as='a' icon>
-                    <Icon name='chevron left' />
-                    </Menu.Item>
-                    <Menu.Item as='a'>1</Menu.Item>
-                    <Menu.Item as='a'>2</Menu.Item>
-                    <Menu.Item as='a'>3</Menu.Item>
-                    <Menu.Item as='a'>4</Menu.Item>
-                    <Menu.Item as='a' icon>
-                    <Icon name='chevron right' />
-                    </Menu.Item>
+                    <Pagination
+                            activePage={currentPage}
+                            onPageChange={handlePaginationChange}
+                            boundaryRange={0}
+                            ellipsisItem={null}
+                            firstItem={null}
+                            lastItem={null}
+                            siblingRange={1}
+                            totalPages={totalPages.total}
+                        />
                 </Menu>
                 </Table.HeaderCell>
             </Table.Row>

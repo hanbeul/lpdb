@@ -297,3 +297,37 @@ module.exports.getPlates = (result) => {
               result(null, rows);
             });
 }
+
+module.exports.getPagePlates = (pageNumber, result) => {
+  let start = Number((pageNumber - 1) * 10);
+  let platesPerPage = 10; 
+  db.all(`SELECT
+            plate_id,
+            plate_number
+          FROM
+            plates
+          ORDER BY
+            plate_id ASC
+          LIMIT '${platesPerPage}' OFFSET '${start}'`,
+          [], (err, rows) => {
+            if (err) {
+              throw err;
+            }
+            result(null, rows);
+          })
+}
+
+module.exports.getPlatesPageCount = (result) => {
+  db.all(`SELECT COUNT(*)
+          FROM plates`,
+          [], (err, rows) => {
+            if (err) {
+              throw err;
+            }
+            let count = Math.ceil(rows[0]['COUNT(*)'] / 10);
+            let pageCount = {
+              total: count
+            } 
+            result(null, pageCount);
+          })
+}
