@@ -81,10 +81,12 @@ module.exports.getPageVisits = (pageNumber, result) => {
   db.all(`SELECT
             visit_id,
             visit_date,
-            plate_id,
+            plate_number,
             visit_image_path
           FROM
             visits
+          INNER JOIN plates
+            ON plates.plate_id = visits.plate_id
           ORDER BY
             visit_id DESC
           LIMIT '${visitsPerPage}' OFFSET '${start}'`,
