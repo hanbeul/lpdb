@@ -81,6 +81,7 @@ module.exports.getPageVisits = (pageNumber, result) => {
   db.all(`SELECT
             visit_id,
             visit_date,
+            visits.plate_id,
             plate_number,
             visit_image_path
           FROM
