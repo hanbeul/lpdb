@@ -60,7 +60,7 @@ function getPageCount(req, res) {
 }
 
 function postVisit(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   const plate = req.body.plate;
   const timestamp = new Date();
   console.log(timestamp);
@@ -68,6 +68,13 @@ function postVisit(req, res) {
   db.insertVisit(plate, timestamp, image_path);
 
   let buff = new Buffer(req.body.image, 'base64');
+
+  //I put this code snippet below because Han did not want me to commit to git the images direcotry inside static.
+  //Not sure what the reason for that is, but I'll do what he says.
+  //But I still need the /images directory for the FS to work, so ¯\_(ツ)_/¯
+  if (!fs.existsSync(`./static/images`)) {
+    fs.mkdirSync(`./static/images`, { recursive: true});
+  }
 
   fs.writeFile(`./static/images/${image_path}`, buff,  "binary",function(err) {
     if(err) {
