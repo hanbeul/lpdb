@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Header, Form, Modal, Icon } from 'semantic-ui-react'
 import axios from 'axios';
+const {REACT_APP_BACKEND_URL} = process.env;
 
 function FocusedScan(props) {
     const [focus, setFocus] = useState([]);
@@ -12,18 +13,18 @@ function FocusedScan(props) {
 
     useEffect(async() => {
         const res = await axios(
-            'http://localhost:9000/api/visits/' + props.focus.visit_id
+            REACT_APP_BACKEND_URL + '/api/visits/' + props.focus.visit_id
         )
         setFocus(res.data)
     },[])
 
     useEffect(async () => {
         const res = await axios(
-            'http://localhost:9000/api/visits/' + props.focus.visit_id
+            REACT_APP_BACKEND_URL + '/api/visits/' + props.focus.visit_id
         )
         setFocus(res.data)
         const res2 = await axios(
-            'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
+            REACT_APP_BACKEND_URL + '/api/visits/countvisits/' + props.focus.plate_id
         )
         setTotalVisit(res2.data); 
         const checkInCompletion = 10;
@@ -79,17 +80,17 @@ function FocusedScan(props) {
 
 
     const updateReq = async () => {
-        await axios.put('http://localhost:9000/api/visits/' + focus[0]['visit_id'], {plate_number: editData})
+        await axios.put(REACT_APP_BACKEND_URL + '/api/visits/' + focus[0]['visit_id'], {plate_number: editData})
         setEditMode(false);
         props.handleFocusEdit();
         const res = await axios(
-            'http://localhost:9000/api/visits/countvisits/' + props.focus.plate_id
+            REACT_APP_BACKEND_URL + '/api/visits/countvisits/' + props.focus.plate_id
         )
         setTotalVisit(res.data); 
     }
 
     const deleteVisit = async () => {
-        await axios.delete('http://localhost:9000/api/visits/' + focus[0]['visit_id'])
+        await axios.delete(REACT_APP_BACKEND_URL + '/api/visits/' + focus[0]['visit_id'])
         setOpen(false);
         props.handleVisitDelete();
     }
@@ -97,7 +98,7 @@ function FocusedScan(props) {
     return (
         <div className="focusedScan">
             {/* <Header as="h1">Scan # {focus[0] ? focus[0]['visit_id'] : ""}</Header> */}
-            <img src={focus[0] ? `http://localhost:9000/images/${focus[0]['visit_image_path']}`: ""} />
+            <img src={focus[0] ? REACT_APP_BACKEND_URL + `/images/${focus[0]['visit_image_path']}`: ""} />
             <div className="focusedScanTextArea">
                 {/* <Header as="h2"> Plate #: </Header> &nbsp;&nbsp;&nbsp; */}
                 <Header as="h2" className="noEditMode on">{focus[0] ? focus[0]['plate_number'] : ""} </Header> &nbsp;&nbsp;&nbsp;
