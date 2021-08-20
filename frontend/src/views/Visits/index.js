@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Menu, Table, Pagination } from 'semantic-ui-react'
 import axios from 'axios'
 import SearchBar from '../../components/Visits/SearchBar'
+const {REACT_APP_BACKEND_URL} = process.env;
 
 function Visits() {
     const [visitsOfCurrentPage, setVisitsOfCurrentPage] = useState([]);
@@ -10,12 +11,12 @@ function Visits() {
 
     useEffect(async() => {
         const res = await axios(
-            'http://localhost:9000/api/visits/page/'+ currentPage
+            REACT_APP_BACKEND_URL + '/api/visits/page/'+ currentPage
             )
         setVisitsOfCurrentPage(res.data);
         
         const res2 = await axios(
-            'http://localhost:9000/api/plates/visits/total'
+            REACT_APP_BACKEND_URL + '/api/plates/visits/total'
         )
         setTotalPages(res2.data)
         }, [currentPage])
@@ -43,7 +44,7 @@ function Visits() {
                     return(
                     <Table.Row>
                         <Table.Cell>{visit.visit_id}</Table.Cell>
-                        <Table.Cell><img src={visit ? `http://localhost:9000/images/${visit.visit_image_path}`: ""} className="scanImg"/></Table.Cell>
+                        <Table.Cell><img src={visit ? `${REACT_APP_BACKEND_URL}/images/${visit.visit_image_path}`: ""} className="scanImg"/></Table.Cell>
                         <Table.Cell>{visit.plate_number}</Table.Cell>
                         <Table.Cell>{new Date(visit.visit_date).toLocaleString()}</Table.Cell>
                     </Table.Row>

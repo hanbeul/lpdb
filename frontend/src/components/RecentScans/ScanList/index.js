@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Segment, Button } from 'semantic-ui-react'
-import sampleLP from '../../../demo/Image-Coming-Soon.jpg'
+const {REACT_APP_BACKEND_URL} = process.env;
+
 
 
 function ScanList(props) {
@@ -21,7 +22,7 @@ function ScanList(props) {
                 return (
                     <Segment className="scan" id={visit.visit_id == focus.visit_id ? "focused" : ""}>
                         <div>
-                            <img src={visit ? `http://localhost:9000/images/${visit.visit_image_path}`: ""} className="scanImg"/>
+                            <img src={visit ? REACT_APP_BACKEND_URL + `/images/${visit.visit_image_path}`: ""} className="scanImg"/>
                         </div>
                         <div>
                             <p>{visit.plate_number}</p>

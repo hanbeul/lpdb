@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, Table, Pagination } from 'semantic-ui-react'
 import axios from 'axios'
+const {REACT_APP_BACKEND_URL} = process.env;
+
 
 function Plates() {
     const [platesOfCurrentPage, setPlatesOfCurrentPage] = useState([]);
@@ -9,12 +11,12 @@ function Plates() {
 
     useEffect(async() => {
         const res = await axios(
-            'http://localhost:9000/api/plates/page/'+ currentPage
+            REACT_APP_BACKEND_URL + '/api/plates/page/'+ currentPage
             )
         setPlatesOfCurrentPage(res.data);
         
         const res2 = await axios(
-            'http://localhost:9000/api/plates/pagecount/total'
+            REACT_APP_BACKEND_URL + '/api/plates/pagecount/total'
         )
         setTotalPages(res2.data)
         }, [currentPage])
