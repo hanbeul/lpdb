@@ -4,7 +4,7 @@ Cython==0.29.23
 idna==2.10
 numpy==1.20.3
 opencv-python==4.5.2.52
-Pillow==8.2.0
+Pillow==9.0.1
 python-dotenv==0.17.1
 requests==2.25.1
 urllib3==1.26.5
