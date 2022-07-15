@@ -1,7 +1,6 @@
 .eslintcache
 node_modules/
 test.js
-.env
 test/
 backend/db
 backend/static/images
