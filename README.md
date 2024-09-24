@@ -1,5 +1,11 @@
 # LPDB
 
+## Run
+
+```bash
+docker compose up -d --build
+```
+
 ## API
 
 Currently takes a webhook request from Square when a payment is made then does the following:
