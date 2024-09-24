@@ -38,6 +38,7 @@ interface Visit {
   license_plate: string
   image: string
   createdAt: string
+  amount_money: number
 }
 
 const data: Visit[] = [
@@ -46,18 +47,21 @@ const data: Visit[] = [
     license_plate: "ABC123",
     image: "/placeholder.svg?height=80&width=120",
     createdAt: "2023-05-01T10:00:00Z",
+    amount_money: 50.00,
   },
   {
     id: "2",
     license_plate: "XYZ789",
     image: "/placeholder.svg?height=80&width=120",
     createdAt: "2023-05-02T14:30:00Z",
+    amount_money: 75.50,
   },
   {
     id: "3",
     license_plate: "DEF456",
     image: "/placeholder.svg?height=80&width=120",
     createdAt: "2023-05-03T09:15:00Z",
+    amount_money: 60.25,
   },
 ]
 
@@ -76,6 +80,18 @@ const columns: ColumnDef<Visit>[] = [
         className="w-30 h-20 object-cover rounded"
       />
     ),
+  },
+  {
+    accessorKey: "amount_money",
+    header: "Amount",
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount_money"))
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount)
+      return formatted
+    },
   },
   {
     accessorKey: "createdAt",
