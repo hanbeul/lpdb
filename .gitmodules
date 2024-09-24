@@ -1,3 +1,0 @@
-[submodule "alpr/ultimateAlpr"]
-	path = alpr/ultimateAlpr
-	url = git@github.com:DoubangoTelecom/ultimateALPR-SDK.git

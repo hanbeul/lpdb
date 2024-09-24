@@ -1,9 +1,0 @@
-FROM node:11
-WORKDIR /app
-COPY package.json .
-COPY package-lock.json .
-RUN npm -g install nodemon
-RUN npm install
-COPY . .
-
-ENTRYPOINT ["nodemon", "src/main.js"]
