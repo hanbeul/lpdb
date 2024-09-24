@@ -6,6 +6,7 @@ services:
       - 8080:8080
     depends_on:
       - db
+      - minio
 
   frontend:
     build: ./frontend
@@ -24,8 +25,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db_data:/var/lib/postgresql/data
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
 
   minio:
     image: quay.io/minio/minio

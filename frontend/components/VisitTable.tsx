@@ -12,7 +12,7 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -94,7 +94,7 @@ const columns: ColumnDef<Visit>[] = [
     },
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "created_at",
     header: ({ column }) => {
       return (
         <Button
@@ -107,7 +107,7 @@ const columns: ColumnDef<Visit>[] = [
       )
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"))
+      const date = new Date(row.getValue("created_at"))
       return date.toLocaleString()
     },
   },
@@ -141,12 +141,12 @@ const columns: ColumnDef<Visit>[] = [
   },
 ]
 
-export function VisitsTable() {
+export function VisitsTable({ visits }: { visits: any[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
-    data,
+    data: visits,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
