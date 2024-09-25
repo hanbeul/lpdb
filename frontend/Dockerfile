@@ -1,10 +1,13 @@
-FROM node
+FROM node:current-alpine AS base
 
 WORKDIR /app
-COPY package*.json ./
-
-RUN npm install
 
 COPY . .
 
-CMD ["npm", "start"]
+RUN npm install
+RUN npm run build
+
+EXPOSE 3000
+
+ENV HOSTNAME="0.0.0.0"
+CMD ["npm", "run", "start"]

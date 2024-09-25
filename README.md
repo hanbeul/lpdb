@@ -1,4 +1,17 @@
-This program is a web app that stores license plates in a useful way. //Mike added this part
-Minki's edit
-This is the perfect spot for me (Han) to type something. This is my space. 
-WIP
+# LPDB
+
+## Run
+
+```bash
+docker compose up
+```
+
+## API
+
+Currently takes a webhook request from Square when a payment is made then does the following:
+
+1. Read's the RTSP stream
+2. Capture the current frame as an image
+3. Saves it to disk
+
+Access the swagger docs at /reference
