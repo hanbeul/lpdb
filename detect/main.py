@@ -13,6 +13,12 @@ model = torch.hub.load('ultralytics/yolov5', 'custom', path="./best.pt")
 client = Client("stepfun-ai/GOT_official_online_demo")
 print("models loaded")
 
+# Create the uploads folder if it doesn't exist
+uploads_dir = 'uploads'
+if not os.path.exists(uploads_dir):
+    os.makedirs(uploads_dir)
+
+
 def process_and_save_crops(image_path, output_path):
     """
     Load an image, process it through a YOLOv5 custom model, and save the detected crops.
