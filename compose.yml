@@ -15,6 +15,13 @@ services:
     depends_on:
       - api
 
+  detect:
+    build: ./detect
+    ports:
+      - 5000:5000
+    depends_on:
+      - api
+
   db:
     container_name: db
     image: pgvector/pgvector:pg16
