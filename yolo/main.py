@@ -3,9 +3,13 @@ import cv2
 import numpy
 from flask import Flask, flash, request, redirect, url_for, make_response, jsonify
 
-model = torch.hub.load("ultralytics/yolov5", "custom", path="./yolov5s_weights.pt", force_reload=True)  # or yolov5n - yolov5x6, custom
+from models import Model
+
+#model = torch.hub.load("ultralytics/yolov5", "custom", path="./yolov5s_weights.pt", force_reload=True)  # or yolov5n - yolov5x6, custom
 
 app = Flask(__name__)
+
+model.init()
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
@@ -27,8 +31,7 @@ def upload_file():
         file = request.files['file']
         file_bytes = numpy.fromfile(file, numpy.uint8)
         img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        results = model(img)
-        results.print()
+        results = model.classify(img)
         return "Done"
     return '''
     <!doctype html>

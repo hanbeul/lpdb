@@ -4,6 +4,7 @@ verify_ssl = false
 name = "pip_conf_index_global"
 
 [packages]
+transformers = "*"
 absl-py = "==2.1.0"
 blinker = "==1.8.2"
 boto3 = "==1.35.25"
@@ -87,6 +88,9 @@ ultralytics-thop = "==2.0.8"
 urllib3 = "==2.2.3"
 werkzeug = "==3.0.4"
 yolov5 = "==7.0.13"
+tiktoken = "*"
+verovio = "*"
+accelerate = ">=0.26.0"
 
 [dev-packages]
 
