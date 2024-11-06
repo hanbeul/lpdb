@@ -1,0 +1,6 @@
+[submodule "alpr/GOT-OCR2.0"]
+	path = alpr/GOT-OCR2.0
+	url = git@github.com:hanbeul/GOT-OCR2.0.git
+[submodule "yolo/GOT-OCR2.0"]
+	path = yolo/GOT-OCR2.0
+	url = git@github.com:hanbeul/GOT-OCR2.0.git
