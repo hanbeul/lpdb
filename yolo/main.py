@@ -3,13 +3,13 @@ import cv2
 import numpy
 from flask import Flask, flash, request, redirect, url_for, make_response, jsonify
 
-from models import Model
+from plate_model import PlateModel
 
 #model = torch.hub.load("ultralytics/yolov5", "custom", path="./yolov5s_weights.pt", force_reload=True)  # or yolov5n - yolov5x6, custom
 
 app = Flask(__name__)
 
-model.init()
+model = PlateModel()
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
