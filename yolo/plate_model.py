@@ -1,5 +1,8 @@
+import os
+import uuid
 import torch
 from transformers import AutoModel, AutoTokenizer
+from PIL import Image
 
 class PlateModel:
     def __init__(self) -> None:
@@ -11,7 +14,11 @@ class PlateModel:
         results = self._plate_model(img)
         results.print()  # or .show(), .save(), .crop(), .pandas(), etc.
         crop = results.crop(save=False)[0]['im']
-        plate = self._ocr_model.chat(self._tokenizer, crop, ocr_type='ocr')
-        print(plate)
-        #res = model.chat(tokenizer, image_file, ocr_type='ocr')
+        im = Image.fromarray(crop)
+
+        file_name = str(uuid.uuid4()) + '.png'
+
+        im.save(file_name)
+        plate = self._ocr_model.chat(self._tokenizer, file_name, ocr_type='ocr')
+        os.remove(file_name)
         return plate
