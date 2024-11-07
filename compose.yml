@@ -26,6 +26,13 @@ services:
     build: ./yolo
     ports:
       - 5001:5001
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   db:
     container_name: db
