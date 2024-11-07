@@ -1,1 +1,13 @@
-.env
+**.env
+
+# JS
+.eslintcache
+node_modules/
+test.js
+test/
+backend/db
+backend/static/images
+
+# Python
+**/venv
+**/__pycache__
