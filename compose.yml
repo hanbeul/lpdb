@@ -24,7 +24,7 @@ services:
 
   alpr:
     build: ./yolo
-    port:
+    ports:
       - 5001:5001
 
   db:
