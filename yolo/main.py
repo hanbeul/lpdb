@@ -31,8 +31,10 @@ def upload_file():
         file = request.files['file']
         file_bytes = numpy.fromfile(file, numpy.uint8)
         img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        results = model.classify(img)
-        return "Done"
+        plate = model.classify(img)
+        return {
+            'license_plate': plate
+        }
     return '''
     <!doctype html>
     <title>Upload new File</title>
